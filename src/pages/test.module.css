@@ -1,0 +1,89 @@
+.loginContainer {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    overflow-x: hidden;
+}
+
+.leftConatainer {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--background-color);
+    overflow-x: hidden;
+
+}
+
+.rightConatainer {
+    width: 50%;
+    height: 100%;
+    background-color: var(--darkblue-bg);
+    
+}
+
+.bgContiner{
+    width: 100%;
+    height: 100%;
+}
+
+.topImg{
+    display: block;
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.bottomImg{
+    transform: rotate(180deg);
+    position: absolute;
+    bottom: 0;
+}
+
+.rightContentBox{
+    height: 100%;
+    width: 50%;
+    top: 0;
+    right: 0;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.contentHolder{
+    width: 60%;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    justify-content: center;
+    align-items: center;
+    color: var(--background-color);
+    font-style: italic;
+}
+.contentHolder h1{
+    font-size: 48px;
+    
+}
+.contentHolder p{
+    font-size: larger;
+    font-weight: 400 !important;
+    margin-top: 0;
+    color: var(--placeholder-color);
+
+}
+
+
+@media (max-width:1000px) {
+    .loginContainer{
+        height: max-content;
+    }
+    .rightConatainer{
+        display: none;
+    }
+    .leftConatainer{
+        width: 100%;
+        height: 100vh;
+    }
+}
