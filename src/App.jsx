@@ -5,6 +5,8 @@ import Signup from './pages/Signup/Signup';
 import AuthenticationLayout from './pages/AuthenticationLayout';
 import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
 import OneTimePassword from './pages/OneTimePassword/OneTimePassword';
+import OpenRoute from './components/OpenRoute';
+import PrivateRoute from './components/PrivateRoute';
 
 function App() {
 
@@ -14,11 +16,12 @@ function App() {
       <Routes>
         
         <Route path="/" element={<AuthenticationLayout />}> 
-          <Route path="/" element={<Login />}/>
-          <Route path="/signup" element={<Signup />}/>
-          <Route path="/validate" element={<OneTimePassword />}/>
-          <Route path="/forgot-password" element={<ForgotPassword />}/>
+          <Route path="/" element={<OpenRoute><Login /></OpenRoute>}/>
+          <Route path="/signup" element={<OpenRoute><Signup /></OpenRoute>}/>
+          <Route path="/verify-email" element={<OpenRoute><OneTimePassword /></OpenRoute>}/>
+          <Route path="/forgot-password" element={<OpenRoute><ForgotPassword /></OpenRoute>}/>
         </Route>
+        <Route path="/admin" element={<PrivateRoute><h1>Admin</h1></PrivateRoute>}/>
         {/* <Route /> */}
         {/* <Route /> */}
         {/* <Route /> */}

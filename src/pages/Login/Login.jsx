@@ -3,15 +3,20 @@ import s from './Login.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 import { login } from '../../Services/Operations/Auth';
+import { useDispatch } from 'react-redux';
 
 const Login = () => {
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     employeeId: '',
     password: '',
   });
+
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
 
   const [errors, setErrors] = useState({});
 
@@ -54,7 +59,7 @@ const Login = () => {
 
 
     // API call placeholder
-    login(data.employeeId, data.password, navigate, setLoading);
+    dispatch(login(data.employeeId, data.password, navigate))
 
   };
 

@@ -30,9 +30,11 @@ const signUp = async (req, res) => {
     !otp||
     !employeeId
   ) {
+    
     return res.json({
       success: false,
       msg: "Fill All the Fields",
+      body:req.body
     });
   }
 
