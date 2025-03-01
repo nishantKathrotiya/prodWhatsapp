@@ -7,6 +7,7 @@ import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
 import OneTimePassword from './pages/OneTimePassword/OneTimePassword';
 import OpenRoute from './components/OpenRoute';
 import PrivateRoute from './components/PrivateRoute';
+import DashboardLayout from './components/DashboardLayout/DashboardLayout';
 
 function App() {
 
@@ -21,7 +22,7 @@ function App() {
           <Route path="/verify-email" element={<OpenRoute><OneTimePassword /></OpenRoute>}/>
           <Route path="/forgot-password" element={<OpenRoute><ForgotPassword /></OpenRoute>}/>
         </Route>
-        <Route path="/admin" element={<PrivateRoute><h1>Admin</h1></PrivateRoute>}/>
+        <Route path="/admin" element={<><DashboardLayout /></>}/>
         {/* <Route /> */}
         {/* <Route /> */}
         {/* <Route /> */}
