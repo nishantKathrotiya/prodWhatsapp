@@ -1,0 +1,85 @@
+.connectModal{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: transparent;
+    backdrop-filter: blur(1px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.conncetConatiner{
+    width: 85%;
+    height: 90%;
+    border-radius: 8px;
+    background-color: #fff;
+    border: 1px solid var(--placeholder-color);
+}
+
+.popTitleConatainer{
+    width: 100%;
+    height: 8%;
+    display: flex;
+    padding: 0 20px;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--placeholder-color);
+}
+
+.closeIcon{
+    color: var(--h3-color);
+    font-size: xx-large;
+    transform: scale(1);
+    cursor: pointer;
+}
+.coantentConatainer{
+    width: 100%;
+    height: 92%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.loadingConatainer{
+    width: 50%;
+    height: 50%;
+    text-align: center;
+}
+
+.readyContainer{
+    text-align: center;
+}
+
+
+
+
+/* ConnectModal.module.css */
+
+.svgContainer {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    margin-bottom: 1.75rem;
+    padding: 0; 
+  }
+  
+  .svgBackground {
+    fill: #9af3c441; 
+  }
+  
+  .svgIconWrapper {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .svgIcon {
+    fill: green; /* Default success color */
+  }

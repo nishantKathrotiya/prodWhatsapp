@@ -1,0 +1,110 @@
+.titleBarConatienr {
+    width: 100%;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--placeholder-color);
+}
+
+.titleBarLeftConatiner {
+    width: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+
+.titleBarLeftConatiner button {
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+    border-radius: 8px;
+    background-color: transparent;
+    border: 1px solid var(--placeholder-color);
+
+    padding: 0;
+    margin: 0;
+}
+
+.menuIcon {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    padding: 0;
+    color: var(--h3-color);
+}
+
+.titleBarRightConatiner {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding-right: 10px;
+    flex-grow: 1;
+    justify-content: end;
+}
+
+
+.whatsappIcon {
+    width: 30px;
+    height: 30px;
+    padding: 3px;
+    border-radius: 50%;
+}
+
+
+.circle {
+    width: 40px;
+    height: 40px;
+    margin: 0;
+    padding: 0;
+    border: 1px solid var(--placeholder-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--h3-color);
+    border-radius: 50%;
+}
+
+.square {
+    height: 40px;
+    width: fit-content;
+    
+    gap: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    border-radius: 8px;
+    background-color: transparent;
+    margin: 0;
+    padding: 0 10px;
+    font-size: small;
+    
+    cursor: pointer;
+}
+
+.wpConncted{
+    background-color: var(--wp-green);
+    color: #fff;
+}
+.wpDisconnected{
+    background-color: #fff;
+    color: var(--wp-green);
+}
+
+.squareConncted{
+    color: #fff;
+    background-color: var(--wp-green);
+    border: 1px solid var(--wp-green);
+}
+
+.squareDisconncted{
+    color: var(--h3-color);
+    background-color:#fff;
+    border: 1px solid var(--placeholder-color);
+}

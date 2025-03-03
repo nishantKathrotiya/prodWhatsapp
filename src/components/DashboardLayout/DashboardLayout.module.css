@@ -1,143 +1,111 @@
 .layoutContainer {
-    display: flex;
-    width: 100%;
-    height: 100vh;
-    position: relative;
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  position: relative;
+}
+
+.layoutSidebar {
+  width: 15%;
+  padding: 20px;
+  border-right: 1px solid var(--placeholder-color);
+  transition: all 0.3s ease;
+}
+
+.layoutMainContainer {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  transition: all 0.3s ease;
+}
+
+.layoutMainContainer.fullWidth {
+  width: 100%;
+}
+
+/* .layoutTitlebar {
+  width: 100%;
+  border-bottom: 1px solid var(--placeholder-color);
+} */
+
+.titlebarContent {
+  display: flex;
+  align-items: center;
+ 
+}
+
+.layoutContent {
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+.scr {
+  height: 8000px;
+  background-color: #F9FAFB;
+}
+
+.menuItem {
+  padding: 10px 0;
+  cursor: pointer;
+}
+
+.menuItem:hover {
+  opacity: 0.7;
+}
+
+/* Mobile specific styles */
+.mobileSidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 70%;
+  background-color: white;
+  z-index: 1001;
+  padding: 20px;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  animation: slideIn 0.3s forwards;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
   }
-  
+  to {
+    transform: translateX(0);
+  }
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.mobileCloseWrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+/* Media query for mobile */
+@media (max-width: 768px) {
   .layoutSidebar {
-    width: 20%;
-    padding: 20px;
-    border-right: 1px solid gray;
-    transition: width 0.3s ease;
+    display: none;
   }
-  
-  .layoutSidebar.collapsed {
-    width: 5%;
-    padding: 20px 5px;
-    overflow: hidden;
-  }
-  
-  .layoutMainContainer {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-  }
-  
-  .layoutTitlebar {
-    width: 100%;
-    height: 30% !important;
-    border-bottom: 1px solid gray;
-    padding: 30px;
-  }
-  
-  .titlebarContent {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-  }
-  
-  .toggleButton {
-    background: none;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 8px;
-    border-radius: 4px;
-    transition: background-color 0.2s;
-  }
-  
-  .toggleButton:hover {
-    background-color: rgba(0, 0, 0, 0.05);
-  }
-  
-  .layoutContent {
-    overflow-y: auto;
-    flex-grow: 1;
-  }
-  
-  .scr {
-    height: 8000px;
-    background-color: #F9FAFB;
-  }
-  
-  .collapsedContent {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-  }
-  
-  .sidebarIcon {
-    font-size: 1.5rem;
-    padding: 5px;
-    cursor: pointer;
-  }
-  
-  .menuItem {
-    padding: 10px 0;
-    cursor: pointer;
-  }
-  
-  .menuItem:hover {
-    opacity: 0.7;
-  }
-  
-  /* Mobile specific styles */
-  .mobileSidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    width: 70%;
-    background-color: white;
-    z-index: 1001;
-    padding: 20px;
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-    animation: slideIn 0.3s forwards;
-  }
-  
-  @keyframes slideIn {
-    from {
-      transform: translateX(-100%);
-    }
-    to {
-      transform: translateX(0);
-    }
-  }
-  
-  .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-  }
-  
-  .mobileCloseWrapper {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 20px;
-  }
-  
-  .closeButton {
-    background: none;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 8px;
-    border-radius: 4px;
-  }
-  
-  /* Media query for mobile */
-  @media (max-width: 768px) {
-    .layoutSidebar {
-      display: none;
-    }
-  }
+}
