@@ -4,7 +4,6 @@ require("dotenv").config();
 
 exports.isLoggedin = async (req, res, next) => {
   try {
-   
     if (!req.cookies.token) {
       return res.json({
         success: false,
@@ -12,9 +11,9 @@ exports.isLoggedin = async (req, res, next) => {
       });
     }
     const user = jwt.verify(req.cookies.token, process.env.JWT_SECRET);
-   
+
     const userAtDb = await userModel.findOne({ email: user.email });
-    
+
     if (!userAtDb) {
       return res.json({
         success: false,
@@ -24,10 +23,9 @@ exports.isLoggedin = async (req, res, next) => {
 
     userAtDb.password = undefined;
     req.user = userAtDb;
-    
+
     next();
   } catch (error) {
-    
     return res.json({
       success: false,
       msg: "error while checking",
@@ -61,12 +59,35 @@ exports.isAdmin = async (req, res, next) => {
         msg: "You are not admin",
       });
     }
-    console.log("Passed Is admin")
+    console.log("Passed Is admin");
     next();
   } catch (error) {
     return res.json({
       success: false,
       msg: "error while Verifying admin",
     });
+  }
+};
+
+exports.socketUserIdExtract = async (token, socket) => {
+  try {
+    if (!token) {
+      socket.emit("auth_failure");
+      return;
+    }
+    const user = jwt.verify(token, process.env.JWT_SECRET);
+    const userAtDb = await userModel.findOne({ email: user.email });
+
+    if (!userAtDb) {
+      socket.emit("user_error");
+      console.log("User Not Found");
+      return;
+    }
+
+    userAtDb.password = undefined;
+    return userAtDb.id;
+
+  } catch (error) {
+    socket.emit("server_error");
   }
 };

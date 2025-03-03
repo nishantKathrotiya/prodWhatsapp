@@ -7,6 +7,7 @@ import MobileSidebar from '../MobileSidebar/MobileSidebar';
 import ConnectModal from '../ConnectModal/ConnectModal';
 import {toast} from 'react-hot-toast'
 import {io} from 'socket.io-client'
+import Test from '../../pages/Test/Test';
 
 const DashboardLayout = () => {
     const [isSidebarVisible, setIsSidebarVisible] = useState(true);
@@ -23,10 +24,10 @@ const DashboardLayout = () => {
     const [userId] = useState(6045); 
 
 
-
     useEffect(() => {
         if (isModalOpen) {
             // Initialize socket when modal is opened
+            setLoading(true);
             const newSocket = io("http://localhost:4000", { withCredentials: true });
             setSocket(newSocket);
 
@@ -115,7 +116,9 @@ const DashboardLayout = () => {
             <div className={`${s.layoutMainContainer} ${!isMobile && !isSidebarVisible ? s.fullWidth : ''}`}>
                 <Titlebar handleToggleClick={handleToggleClick} setIsModalOpen={setIsModalOpen}/>
                 <div className={s.layoutContent}>
-                    <div className={s.scr}>Test</div>
+                    <div className={s.scr}>
+                        <Test />
+                    </div>
                 </div>
             </div>
 

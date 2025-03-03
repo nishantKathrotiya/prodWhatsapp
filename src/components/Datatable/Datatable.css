@@ -1,0 +1,271 @@
+.dataTableContainer {
+    width: 100%;
+    height: 100%;
+    font-family: Poppins, sans-serif;
+}
+
+.titleRow {
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #ccc;
+}
+
+.searchDiv {
+    width: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+}
+
+.searchDiv input {
+    width: 60%;
+    height: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid gray;
+    outline: none;
+}
+
+.searchDiv button {
+    background-color: transparent;
+    border: none;
+    outline: none !important;
+}
+
+.iconMedium {
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+    color: black;
+}
+
+.headertext {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.dataTableOverflow {
+    overflow-y: scroll;
+    height: calc(100% - 60px);
+    width: 100%;
+    position: relative;
+}
+
+.columnTitle {
+    width: fit-content;
+    min-width: 100%;
+    padding: 10px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #ccc;
+    background-color: #f9f9f9;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    box-shadow: rgba(0, 0, 0, 0.147) 0px 1px 10px;
+}
+
+.titleLabel {
+    /* min-width: 120px; */
+    /* min-width: 440px !important; */
+    gap: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modalBackdrop {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(5px);
+}
+
+.problemContainer {
+    width: 60%;
+    height: 60%;
+    padding: 20px;
+    border-radius: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid gray;
+}
+
+.problemSection {
+    width: 100%;
+    height: 100%;
+}
+
+.titleSection {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.titleSection p {
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.iconlarge {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.probleTextSection {
+    width: 100%;
+    height: 70%;
+    padding: 10px;
+    padding-top: 10px;
+    border-radius: 10px;
+    border: 1px solid gray;
+    background-color: white;
+    overflow: scroll;
+}
+
+.problemName {
+    width: 100%;
+    height: 15%;
+    margin: 10px 0;
+    padding: 10px;
+    padding-top: 0;
+    border-radius: 10px;
+    border: 1px solid gray;
+    background-color: white;
+    display: flex;
+    align-items: center;
+}
+
+.downloadBtnConatinerAtUser {
+    width: 50px;
+    height: 50px;
+    bottom: -40%;
+    right: 5%;
+
+    position: absolute;
+}
+
+.downloadBtnConatinerAtUser button {
+    height: 100%;
+    width: 100%;
+    font-size: larger;
+    border-radius: 50%;
+    padding: 5px;
+    outline: none;
+    cursor: pointer;
+    border: 1px solid gray;
+    background-color: #ffffff;
+}
+
+
+.downloadBtnConatiner {
+    width: 50px;
+    height: 50px;
+    right: 6%;
+    bottom: 7.5%;
+    position: absolute;
+
+}
+
+.downloadBtnConatiner button {
+    height: 100%;
+    width: 100%;
+    font-size: larger;
+    border-radius: 50%;
+    padding: 5px;
+    outline: none;
+    cursor: pointer;
+    border: 1px solid gray;
+    background-color: #ffffff;
+}
+
+@media (max-width:760px) {
+    .headertext {
+        font-size: 0.8rem;
+    }
+
+    .searchDiv {
+        width: 60%;
+        align-items: center;
+    }
+
+    .dataTableOverflow {
+        font-size: 0.7rem;
+    }
+
+    .searchDiv input {
+        height: 20px;
+        padding: 10px;
+        font-size: 0.7rem;
+        height: 100%;
+    }
+
+    .iconMedium {
+        height: 20px;
+        width: 20px;
+    }
+
+    .problemContainer {
+        width: 90%;
+        height: 60%;
+        font-size: 0.8rem;
+    }
+
+    .titleLabel {
+        min-width: 100px;
+    }
+
+    .lastLine {
+        margin-right: 0;
+    }
+
+    .searchDiv input {
+        width: 50%;
+        padding: 5px;
+        font-size: x-small;
+    }
+
+    .downloadBtnConatinerAtUser {
+        bottom: -83%;
+        right: 4%;
+    }
+}
+
+
+
+@media (max-width:960px) {
+    .downloadBtnConatinerAtUser {
+        bottom: -83%;
+        right: 4%;
+    }
+}
+
+.btm {
+    color: var(--h3-color);
+    width: max-content;
+    border: 1px solid gray !important;
+    border-radius: 4px !important;
+    padding: 5px 10px !important;
+    cursor: pointer;
+    margin: 0;
+}
+
+.searchDiv{
+    /* background-color: red; */
+    justify-content: end;
+    align-items: center;
+}

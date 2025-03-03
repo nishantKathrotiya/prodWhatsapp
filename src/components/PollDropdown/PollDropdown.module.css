@@ -1,0 +1,27 @@
+.dropContainer{
+    font-size: x-large;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+.optionsContainer{
+    background-color: #fff;
+    width: 60px;
+    height: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid gray;
+    outline: none;
+    font-size: small;
+}
+
+
+
+@media (max-width:760px) {
+    .optionsContainer{
+        width: 45px;
+        padding: 4px;
+        font-size: x-small;
+    }
+}

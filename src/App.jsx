@@ -22,7 +22,7 @@ function App() {
           <Route path="/verify-email" element={<OpenRoute><OneTimePassword /></OpenRoute>}/>
           <Route path="/forgot-password" element={<OpenRoute><ForgotPassword /></OpenRoute>}/>
         </Route>
-        <Route path="/admin" element={<><DashboardLayout /></>}/>
+        <Route path="/admin" element={<PrivateRoute><DashboardLayout /></PrivateRoute>}/>
         {/* <Route /> */}
         {/* <Route /> */}
         {/* <Route /> */}

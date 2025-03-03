@@ -4,6 +4,7 @@ const http = require('http');
 const { Client } = require('whatsapp-web.js');
 const { LocalAuth } = require('whatsapp-web.js');
 const fs = require('fs');
+const {socketUserIdExtract , isLoggedin} = require('./Middleware/AuthMiddleware')
 
 const app = express();
 const server = http.createServer(app);
@@ -25,6 +26,7 @@ const io = new Server(server, {
 // Other imports and setup...
 const dbConnect = require("./Config/Connect");
 const cookieParser = require("cookie-parser");
+const cookie = require('cookie');
 const cors = require("cors");
 const dotenv = require("dotenv");
 
@@ -207,12 +209,13 @@ const cleanupClient = (userId) => {
 };
 
 // Socket.IO Connection
-io.on("connection", (socket) => {
+io.on("connection", async (socket) => {
 
     console.log(`New socket connection: ${socket.id}`);
     let associatedUserId = null;
 
-    socket.on("login", (userId) => {
+    socket.on("login", async() => {
+        const userId = await socketUserIdExtract(cookie.parse(socket.request.headers.cookie).token,socket)
         console.log(`Login request for ${userId} from socket ${socket.id}`);
         associatedUserId = userId;  // Store the userId associated with this socket
         initializeClient(userId, socket);
@@ -300,23 +303,52 @@ app.post('/send-message/:userId', async (req, res) => {
   }
 });
 
-app.post('/send-all/:userId', async (req, res) => {
-  const userId = req.params.userId;
-  const { phoneNumbers, message } = req.body;  // Expecting an array of phone numbers
+// app.post('/send-all/:userId', async (req, res) => {
+//   const userId = req.params.userId;
+//   const { phoneNumbers, message } = req.body;  // Expecting an array of phone numbers
+
+//   if (!clients[userId]) {
+//     return res.status(400).json({ error: 'User not logged in' });
+//   }
+//   if (!phoneNumbers || !message) {
+//     return res.status(400).json({ error: 'Phone numbers and message are required' });
+//   }
+//   if (!Array.isArray(phoneNumbers) || phoneNumbers.length === 0) {
+//     return res.status(400).json({ error: 'Phone numbers should be an array and cannot be empty' });
+//   }
+
+//   try {
+//     const sendMessagePromises = phoneNumbers.map(phoneNumber => {
+//       return clients[userId].client.sendMessage(phoneNumber + '@c.us', message);
+//     });
+
+//     // Wait for all messages to be sent
+//     const responses = await Promise.all(sendMessagePromises);
+    
+//     res.json({ success: true, message: 'Messages sent', responses });
+//   } catch (error) {
+//     res.status(500).json({ success: false, message: 'Failed to send messages', error });
+//   }
+// });
+
+
+app.post('/send-all', isLoggedin,async (req, res) => {
+  const userId = req.user.id;
+  const { selectedIds } = req.body;  // Expecting an array of phone numbers
 
   if (!clients[userId]) {
-    return res.status(400).json({ error: 'User not logged in' });
+    return res.json({success:false, message: 'User not logged in' });
   }
-  if (!phoneNumbers || !message) {
-    return res.status(400).json({ error: 'Phone numbers and message are required' });
+  if (!selectedIds) {
+    return res.json({ success:false,message: 'Phone numbers are required' });
   }
-  if (!Array.isArray(phoneNumbers) || phoneNumbers.length === 0) {
-    return res.status(400).json({ error: 'Phone numbers should be an array and cannot be empty' });
+  if (!Array.isArray(selectedIds) ||selectedIds.length === 0) {
+    return res.json({success:false, message: 'Phone numbers should be an array and cannot be empty' });
   }
 
   try {
-    const sendMessagePromises = phoneNumbers.map(phoneNumber => {
-      return clients[userId].client.sendMessage(phoneNumber + '@c.us', message);
+    const sendMessagePromises = selectedIds.map(data => {
+      return clients[userId].client.sendMessage(data.contactNo + '@c.us', data.studentId);
     });
 
     // Wait for all messages to be sent
@@ -327,7 +359,6 @@ app.post('/send-all/:userId', async (req, res) => {
     res.status(500).json({ success: false, message: 'Failed to send messages', error });
   }
 });
-
 
 app.get('/logout/:userId', async (req, res) => {
   const userId = req.params.userId;

@@ -7,4 +7,8 @@ export const AUTH_ENDPOINTS = {
     RESETPASSTOKEN_API: BASE_URL + "/auth/reset-password-token",
     RESETPASSWORD_API: BASE_URL + "/auth/reset-password",
   }
+
+  export const MESSAGE_ENDPOINTS = {
+    SEND_ALL: BASE_URL + "/send-all",
+  }
   

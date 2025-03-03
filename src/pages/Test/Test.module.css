@@ -1,0 +1,12 @@
+.dataTableFixer{
+    width: 80%;
+    height: 70vh;
+    border: 1px solid gray;
+    padding: 10px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    padding-bottom: 40px;
+}

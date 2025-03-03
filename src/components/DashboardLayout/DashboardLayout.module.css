@@ -40,8 +40,11 @@
 }
 
 .scr {
-  height: 8000px;
+  height: 100%;
   background-color: #F9FAFB;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .menuItem {
