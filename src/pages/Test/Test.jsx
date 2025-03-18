@@ -90,7 +90,8 @@ const Test = () => {
     
   return (
     <div className={s.dataTableFixer}>
-        <Datatable data={data} />
+        {/* <Datatable data={data} /> */}
+        <h1>Welcome</h1>
     </div>
   )
 }

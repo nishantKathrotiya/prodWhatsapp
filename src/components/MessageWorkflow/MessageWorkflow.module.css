@@ -1,0 +1,73 @@
+.workFlowContainer {
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    background-color: #0000002e;
+    backdrop-filter: blur(1px);
+    overflow: hidden;
+}
+
+.workFlowBox {
+    height: 90%;
+    width: 90%;
+    max-width: 2200px;
+    max-height: 1500px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    background-color: #fff;
+    border: 1px solid var(--border-color);
+}
+
+.workFlowTitleContainer{
+    width: 100%;
+    height: 10%;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    color: var(--h3-color);
+    border-bottom: 1px solid var(--border-color);
+}
+.workFlowTitleContainer .fixIcon{
+    font-size: xx-large;
+    cursor: pointer;
+}
+.stepper{
+    height: 15%;
+    width: 100%;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+.componentContainer{
+    width: 80%;
+    margin: 20px 0;
+    flex-grow: 1;
+    padding: 0 20px;
+}
+
+
+@media (max-width:900px) {
+    .workFlowTitleContainer h2{
+        font-size: large;
+    }
+    .componentContainer{
+        width: 90%;
+        margin: 10px 0;
+        flex-grow: 1;
+        padding: 0 10px;
+    }
+    .stepper{
+        width: 90%;
+    }
+}

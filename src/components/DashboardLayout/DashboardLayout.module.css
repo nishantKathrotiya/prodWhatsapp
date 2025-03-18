@@ -41,10 +41,11 @@
 
 .scr {
   height: 100%;
+  width: 100%;
   background-color: #F9FAFB;
   display: flex;
   justify-content: center;
-  align-items: center;
+  
 }
 
 .menuItem {
@@ -110,5 +111,10 @@
 @media (max-width: 768px) {
   .layoutSidebar {
     display: none;
+  }
+
+  .layoutMainContainer{
+    width: 100vw !important;
+
   }
 }

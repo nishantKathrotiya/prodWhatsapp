@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import Dataview from '../Dataview/Dataview';
-import PollDropdown from '../PollDropdown/PollDropdown';
 import { MdFilterAltOff } from "react-icons/md";
-import { FiDownload } from "react-icons/fi";
-import Filter from '../Dropdown/Filter';
 import './Datatable.css';
 import { toast } from 'react-hot-toast';
-import { sendMessages } from '../../Services/Operations/Message';
+import { useSelector } from 'react-redux';
 
-const Datatable = ({ data }) => {
+const Datatable = ({ data,selectedIds,handleSelect,setModal }) => {
     const [searchQuery, setSearchQuery] = useState('');
-    const [partyFilter, setPartyFilter] = useState('n');
     const [filteredData, setFilteredData] = useState(data);
-    const [selectedIds, setSelectedIds] = useState([]);
+   
+    const { status } = useSelector((state) => state.profile)
 
     useEffect(() => {
         let filtered = data;
@@ -21,54 +18,43 @@ const Datatable = ({ data }) => {
             filtered = filtered.filter(entry => {
                 const query = searchQuery.toLowerCase();
                 return (
-                    (entry.name && entry.name.toLowerCase().includes(query)) ||
+                    (entry.firstName && (entry.firstName + entry.lastName).toLowerCase().includes(query)) ||
                     (entry.studentId && entry.studentId.toLowerCase().includes(query))
                 );
             });
         }
 
-        if (partyFilter !== 'n') {
-            filtered = filtered.filter(entry => {
-                return entry.batch.toLowerCase().includes(partyFilter.toLowerCase());
-            });
-        }
-
         setFilteredData(filtered);
-    }, [searchQuery, partyFilter, data]);
+    }, [searchQuery, data]);
 
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
     };
 
-    const handleSelect = (studentId, contactNo) => {
-        setSelectedIds((prevIds) => {
-            const isSelected = prevIds.some((entry) => entry.studentId === studentId);
-            if (isSelected) {
-                return prevIds.filter((entry) => entry.studentId !== studentId);
-            } else {
-                return [...prevIds, { studentId, contactNo }];
-            }
-        });
-    };
-    
-
     const clearFilters = () => {
         setSearchQuery('');
-        setPartyFilter('n');
-        setSelectedIds([]); // Clear selected IDs
     };
 
     // Extract selected IDs
     const getSelectedIds = () => {
-        sendMessages(selectedIds,setSelectedIds)
+      
+       
+        setModal(true);
+
     };
 
     return (
-        <div className='dataTableContainer'>
+       <>
+         <div className='dataTableContainer'>
             <div className='titleRow'>
-                <div className='headertext'>All The Entries</div>
+                <div className='headertext'>Students</div>
                 <div className='searchDiv'>
-                        <button onClick={getSelectedIds} className='btm'>Send</button>
+                    <input
+                        value={searchQuery}
+                        placeholder='Enter name or studentID'
+                        onChange={(e) => handleSearchChange(e)} />
+                    <MdFilterAltOff className='iconFix' onClick={clearFilters} />
+                    <button onClick={getSelectedIds} className='btm'>Send</button>
                 </div>
             </div>
             <div className='dataTableOverflow'>
@@ -77,8 +63,8 @@ const Datatable = ({ data }) => {
                     <span className='titlelable'>StudentID </span>
                     <span className='titlelable'>Name</span>
                     <span className='titlelable'>Semester</span>
-                    <span className='titlelable lastLine'>Class</span>
-                    <span className='titlelable lastLine'>Batch</span>
+                    <span className='titlelable'>divison</span>
+                    <span className='titlelable '>Batch</span>
                 </div>
                 {
                     filteredData.length === 0 ? (
@@ -89,9 +75,8 @@ const Datatable = ({ data }) => {
                                 <Dataview
                                     key={i}
                                     entry={entry}
-                                    onSelect={handleSelect} // Pass the handler to Dataview
+                                    onSelect={handleSelect}
                                     isSelected={selectedIds.some((selectedEntry) => selectedEntry.studentId === entry.studentId)}
-
                                 />
                             ))}
                         </>
@@ -99,6 +84,7 @@ const Datatable = ({ data }) => {
                 }
             </div>
         </div>
+       </>
     );
 };
 

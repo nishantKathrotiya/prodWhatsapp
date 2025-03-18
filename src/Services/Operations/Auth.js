@@ -2,7 +2,7 @@ import { toast } from "react-hot-toast";
 import { setLoading  } from "../../Slices/authSlice";
 import { apiConnector } from "../Connect"
 import { AUTH_ENDPOINTS } from "../Api";
-import { setToken , setUser } from "../../Slices/profileSlice";
+import { setToken,setUser } from "../../Slices/profileSlice";
 
 
 export function sendOtp(email, navigate) {
@@ -91,31 +91,4 @@ export function logout(navigate) {
   }
 }
 
-//Temporary
-// export  async function login(employeeId,password,navigate,setLoading){
-//       const toastId = toast.loading("Loading...")
-//       setLoading(true)
-//       try {
-//         const response = await apiConnector("POST", 'http://localhost:4000/api/v1/auth/login', {employeeId, password})
-//         console.log("LOGIN API RESPONSE............", response)
-  
-//         if(!response.data.success) {
-//           throw new Error(response.data.message)
-//         }
-//         toast.success("Login Successful")
-//         // dispatch(setToken(response.data.token))
-//         // dispatch(setUser({ ...response.data.user}))
-        
-//         // localStorage.setItem("token", JSON.stringify(response.data.token))
-//         // localStorage.setItem("user", JSON.stringify(response.data.user))
-       
-//         navigate('/admin');
-//       }
-//        catch (error) {
-//         console.log("LOGIN API ERROR............", error)
-//         toast.error(error.message)
-//       }
-//       setLoading(false)
-//       toast.dismiss(toastId)
-//     }
   

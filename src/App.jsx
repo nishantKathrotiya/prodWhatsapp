@@ -8,7 +8,8 @@ import OneTimePassword from './pages/OneTimePassword/OneTimePassword';
 import OpenRoute from './components/OpenRoute';
 import PrivateRoute from './components/PrivateRoute';
 import DashboardLayout from './components/DashboardLayout/DashboardLayout';
-
+import Test from './pages/Test/Test'
+import Students from './pages/Students/Students';
 function App() {
 
 
@@ -22,10 +23,10 @@ function App() {
           <Route path="/verify-email" element={<OpenRoute><OneTimePassword /></OpenRoute>}/>
           <Route path="/forgot-password" element={<OpenRoute><ForgotPassword /></OpenRoute>}/>
         </Route>
-        <Route path="/admin" element={<PrivateRoute><DashboardLayout /></PrivateRoute>}/>
-        {/* <Route /> */}
-        {/* <Route /> */}
-        {/* <Route /> */}
+        <Route path="/admin" element={<><DashboardLayout /></>}>
+          <Route path="/admin" element={<Test />} /> 
+          <Route path="/admin/students" element={<Students />} />
+        </Route>
       </Routes>
       
     </div>

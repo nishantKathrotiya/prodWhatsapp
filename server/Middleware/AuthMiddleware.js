@@ -7,7 +7,7 @@ exports.isLoggedin = async (req, res, next) => {
     if (!req.cookies.token) {
       return res.json({
         success: false,
-        msg: "Token Not Found",
+        message: "Token Not Found",
       });
     }
     const user = jwt.verify(req.cookies.token, process.env.JWT_SECRET);
@@ -17,7 +17,7 @@ exports.isLoggedin = async (req, res, next) => {
     if (!userAtDb) {
       return res.json({
         success: false,
-        msg: "Invalid User",
+        message: "Invalid User",
       });
     }
 
@@ -28,7 +28,7 @@ exports.isLoggedin = async (req, res, next) => {
   } catch (error) {
     return res.json({
       success: false,
-      msg: "error while checking",
+      message: "error while checking",
     });
   }
 };
@@ -38,7 +38,7 @@ exports.isUser = async (req, res) => {
     if (req.user.role !== "user") {
       return res.send({
         success: false,
-        msg: "You are not User",
+        message: "You are not User",
       });
     }
 
@@ -46,7 +46,7 @@ exports.isUser = async (req, res) => {
   } catch (error) {
     return res.json({
       success: false,
-      msg: "error while Verifying User",
+      message: "error while Verifying User",
     });
   }
 };
@@ -56,7 +56,7 @@ exports.isAdmin = async (req, res, next) => {
     if (req.user.role !== "admin") {
       return res.send({
         success: false,
-        msg: "You are not admin",
+        message: "You are not admin",
       });
     }
     console.log("Passed Is admin");
@@ -64,7 +64,7 @@ exports.isAdmin = async (req, res, next) => {
   } catch (error) {
     return res.json({
       success: false,
-      msg: "error while Verifying admin",
+      message: "error while Verifying admin",
     });
   }
 };

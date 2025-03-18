@@ -1,52 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import QRCode from 'react-qr-code';
-import { io } from 'socket.io-client';
-import { useNavigate } from 'react-router-dom';
 import s from './ConnectModal.module.css';
 import Loading from '../Loading/Loading';
 import { IoCloseCircleOutline } from "react-icons/io5";
-import { toast } from 'react-hot-toast';
 
-// Move socket initialization outside of component to prevent multiple connections
-// const socket = io("http://localhost:4000", { withCredentials: true });
 
 
 const ConnectModal = ({ status, setStatus, setIsModalOpen,loading,qrData,socket,handleLogin }) => {
-    // const [loading, setLoading] = useState(false);
-    // const [qrData, setQrData] = useState(null);
-    // const [userId] = useState(6045); // Store userId in state or get from props/context
-    
-    const navigate = useNavigate();
-
-
-
-//   useEffect(() => {
-//     console.log(status , loading)
-//     socket.on("connect", () => {
-//         setLoading(false);
-//         console.log("Socket Connceted")
-//     });
-
-//     socket.on("qr", (data) => {
-//       setQrData(data.qrCode);
-//       setStatus("QR");
-//     });
-
-//     socket.on("status", (data) => {
-//       setStatus(data.status);
-//       if (data.status === "READY") {
-//         console.log(data.userId)
-//         navigate(`/send/${data.userId}`);
-//         setQrData(null); // Hide QR when ready
-//       }
-//     });
-
-//     return () => {
-//       socket.off("qr");
-//       socket.off("status");
-//     };
-//   }, []);
-
 
 
     const handleCloseModal = () => {

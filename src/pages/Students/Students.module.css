@@ -1,0 +1,112 @@
+.sConatiner {
+    width: 100%;
+    overflow-y: scroll;
+    padding: 20px;
+}
+
+.studentFetch {
+    gap: 20px;
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 8px;
+    background-color: #fff;
+    color: var(--title-color);
+    border: 1px solid var(--placeholder-color);
+}
+
+.fieldsConatainer {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+}
+
+.selectConatiner {
+    display: flex;
+
+    gap: 20px;
+    width: 500px;
+    max-width: 90%;
+    overflow: hidden;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.checkConatainer {
+    width: 100%;
+    gap: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.optionConatainer {
+    flex: 1 1 45%;
+    width: fit-content;
+    display: flex;
+    gap: 3px;
+    flex-direction: column;
+    font-size: small;
+}
+
+.optionConatainer select {
+    padding: 4px;
+    font-size: small !important;
+    border-radius: 6px;
+}
+
+.studentFetch button {
+    max-width: 250px;
+}
+
+.disabled {
+    cursor: not-allowed;
+}
+
+.active {
+    cursor: pointer;
+}
+
+
+
+/* Media query for mobile */
+@media (max-width: 768px) {
+    .studentFetch {
+        align-items: center;
+    }
+
+    .studentFetch button {
+        max-width: 90%;
+        margin: 0 auto;
+    }
+
+    .selectConatiner {
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .fieldsConatainer {
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .optionConatainer {
+        width: 100%;
+    }
+
+    label {
+        font-size: small;
+    }
+}
+
+
+.fullWidthH2 {
+    width: 100%;
+}

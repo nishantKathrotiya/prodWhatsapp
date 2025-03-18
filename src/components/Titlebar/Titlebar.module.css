@@ -86,6 +86,7 @@
     font-size: small;
     
     cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 .wpConncted{
@@ -107,4 +108,16 @@
     color: var(--h3-color);
     background-color:#fff;
     border: 1px solid var(--placeholder-color);
+}
+
+.pConnected{
+    color: #fff;
+}
+
+.pDisconnected{
+    color: var(--title-color);
+}
+
+.square:hover{
+   box-shadow: 1px 1px 3px 1px rgba(210, 210, 210, 0.858);
 }

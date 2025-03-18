@@ -58,6 +58,13 @@
 
 /* ConnectModal.module.css */
 
+.qrContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
 .svgContainer {
     position: relative;
     display: flex;

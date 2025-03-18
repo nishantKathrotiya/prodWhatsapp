@@ -3,20 +3,21 @@ import './Dataview.css';
 
 const Dataview = ({ entry, onSelect, isSelected }) => {
   return (
-    <div className='rowdata'>
-      {/* Checkbox added in the first span */}
+    <div className='rowdata' >
+   
       <span className='titlelable'>
-      <input
+        <input
           type="checkbox"
+          className='checkBox'
           checked={isSelected}
-          onChange={() => onSelect(entry.studentId, entry.contactNo)} // Pass both studentId and contactNo
+          onChange={() => onSelect(entry.studentId, entry.firstName,entry.lastName)}
         />
       </span>
       <span className='titlelable'>{entry.studentId}</span>
-      <span className='titlelable'>{entry.name}</span>
-      <span className='titlelable'>{entry.semester}</span>
-      <span className='titlelable lastLine'>{entry.class}</span>
-      <span className='titlelable lastLine'>{entry.batch}</span>
+      <span className='titlelable'>{entry.lastName} {entry.firstName}</span>
+      <span className='titlelable'>{entry.currentSemester}{entry.department}</span>
+      <span className='titlelable'>{entry.division}</span>
+      <span className='titlelable'>{entry.batch}</span>
     </div>
   );
 };

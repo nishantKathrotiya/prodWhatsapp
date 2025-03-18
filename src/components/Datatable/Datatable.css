@@ -1,7 +1,12 @@
 .dataTableContainer {
     width: 100%;
-    height: 100%;
+    height: 85vh;
+    padding: 10px;
+    margin-top:20px;
+    border-radius: 8px;
     font-family: Poppins, sans-serif;
+    border: 1px solid var(--border-color);
+    background-color: #fff;
 }
 
 .titleRow {
@@ -16,24 +21,28 @@
 .searchDiv {
     width: 30%;
     display: flex;
+    gap: 15px;
     align-items: center;
     justify-content: space-around;
-
 }
 
 .searchDiv input {
     width: 60%;
-    height: 100%;
-    padding: 8px;
+    padding: 5px;
+    outline: none;
     border-radius: 5px;
     border: 1px solid gray;
-    outline: none;
 }
+.iconFix{
+    height: 100%;
+    font-size: x-large;
+    cursor: pointer;
+}   
 
 .searchDiv button {
-    background-color: transparent;
     border: none;
     outline: none !important;
+    background-color: transparent;
 }
 
 .iconMedium {

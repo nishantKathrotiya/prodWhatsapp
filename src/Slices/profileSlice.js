@@ -4,6 +4,7 @@ const initialState = {
     user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null,
     token: localStorage.getItem("token") ? JSON.parse(localStorage.getItem("token")) : null,
     loading: false,
+    status:"DISCONNECTED"
 };
 
 const profileSlice = createSlice({
@@ -19,9 +20,12 @@ const profileSlice = createSlice({
           },
         setToken(state, value) {
             state.token = value.payload;
-        }
+        },
+        setStatus2(state, value) {
+            state.status = value.payload;
+        },
     },
 });
 
-export const {setUser, setLoading , setToken} = profileSlice.actions;
+export const {setUser, setLoading , setToken,setStatus2} = profileSlice.actions;
 export default profileSlice.reducer;

@@ -1,27 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import s from './DashboardLayout.module.css';
-import { Menu, X } from 'lucide-react';
 import DesktopSidebar from '../DesktopSidebar/DesktopSidebar';
 import Titlebar from '../Titlebar/Titlebar';
 import MobileSidebar from '../MobileSidebar/MobileSidebar';
 import ConnectModal from '../ConnectModal/ConnectModal';
 import {toast} from 'react-hot-toast'
 import {io} from 'socket.io-client'
-import Test from '../../pages/Test/Test';
+import { Outlet } from 'react-router-dom';
+import { checkStatus } from '../../Services/Operations/Message';
+import { useDispatch } from 'react-redux';
+import { setStatus2 } from '../../Slices/profileSlice';
 
 const DashboardLayout = () => {
     const [isSidebarVisible, setIsSidebarVisible] = useState(true);
     const [isMobile, setIsMobile] = useState(false);
     const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
-    const [status, setStatus] = useState("INITIALIZING");
+    const [status, setStatus] = useState("DISCONNECTED");
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const dispatch = useDispatch()
 
 
     const [loading, setLoading] = useState(false);
     const [qrData, setQrData] = useState(null);
     const [socket,setSocket] = useState(null);
-    // const navigate = useNavigate();
-    const [userId] = useState(6045); 
+    
 
 
     useEffect(() => {
@@ -43,7 +45,7 @@ const DashboardLayout = () => {
                 setStatus(data.status);
                 setLoading(false);
                 if (data.status === "READY") {
-                    console.log("WhatsApp connected!");
+                    dispatch(setStatus2(data.status));
                 }
             });
 
@@ -64,12 +66,16 @@ const DashboardLayout = () => {
                 console.log("Socket Disconnected due to modal closing");
             }
         }
-    }, [isModalOpen]); 
+    }, [isModalOpen]);
+    
+    useEffect(()=>{
+        dispatch( checkStatus(setLoading));
+    },[]);
 
     const handleLogin = ()=>{
-        setStatus("INTIALIZING");
+        setStatus("INITIALIZING");
         setLoading(true);
-        socket.emit('login',userId)
+        socket.emit('login')
    }
 
 
@@ -117,7 +123,7 @@ const DashboardLayout = () => {
                 <Titlebar handleToggleClick={handleToggleClick} setIsModalOpen={setIsModalOpen}/>
                 <div className={s.layoutContent}>
                     <div className={s.scr}>
-                        <Test />
+                        <Outlet/>
                     </div>
                 </div>
             </div>
