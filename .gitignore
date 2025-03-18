@@ -23,7 +23,10 @@ dist-ssr
 *.sln
 *.sw?
 
+.env
 ./server/node_modules
 
 ./server/.env
 ./node_modules
+./server/Utils/Student.csv
+server/Utils/Student.csv
