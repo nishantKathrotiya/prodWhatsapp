@@ -18,7 +18,7 @@ const AuthenticationLayout = () => {
                 <div className={s.rightContentBox}>
                     <div className={s.contentHolder}>
                         <h1 style={{ fontWeight: 400 }}>DEPSTAR</h1>
-                        <p>Matching Pace with the Advancing World</p>
+                        <p className={s.tagline}>Matching Pace with the Advancing World</p>
                     </div>
                 </div>
             </div>

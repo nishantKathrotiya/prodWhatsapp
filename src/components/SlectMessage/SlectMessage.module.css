@@ -1,0 +1,130 @@
+.container {
+    width: 100%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    overflow: hidden;
+}
+
+.titleContainer {
+    width: 100%;
+    height: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-transform: initial;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.titleContainer h4 {
+    font-size: larger;
+    color: var(--h3-color);
+}
+
+.titleContainer p {
+    font-size: small;
+    color: #000;
+    text-transform: initial;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.iconFix {
+    font-size: x-large !important;
+}
+
+.messageContainer {
+    width: 100%;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+}
+
+.selectContainer {
+    width: 100%;
+}
+
+.messageSelect {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: white;
+    color: var(--title-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.messageSelect:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(var(--primary-color-rgb), 0.1);
+}
+
+.previewContainer {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.customMessageInput {
+    flex: 1;
+    width: 100%;
+    padding: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 16px;
+    resize: none;
+    background-color: white;
+    color: var(--title-color);
+    transition: all 0.3s ease;
+}
+
+.customMessageInput:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(var(--primary-color-rgb), 0.1);
+}
+
+.messagePreview {
+    flex: 1;
+    width: 100%;
+    padding: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: white;
+    color: var(--title-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .titleContainer h4 {
+        font-size: medium;
+    }
+    
+    .titleContainer p {
+        display: none;
+    }
+    
+    .messageContainer {
+        padding: 10px;
+    }
+    
+    .messageSelect,
+    .customMessageInput,
+    .messagePreview {
+        font-size: 14px;
+    }
+}

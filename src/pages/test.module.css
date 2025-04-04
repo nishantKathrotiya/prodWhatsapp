@@ -66,11 +66,11 @@
     font-size: 48px;
     
 }
-.contentHolder p{
+.tagline{
     font-size: larger;
     font-weight: 400 !important;
     margin-top: 0;
-    color: var(--placeholder-color);
+    color: rgb(186, 186, 186);
 
 }
 

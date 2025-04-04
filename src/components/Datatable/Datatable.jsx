@@ -5,9 +5,10 @@ import './Datatable.css';
 import { toast } from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 
-const Datatable = ({ data,selectedIds,handleSelect,setModal }) => {
+const Datatable = ({ data, selectedIds, handleSelect, setModal }) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [filteredData, setFilteredData] = useState(data);
+    const [selectAll, setSelectAll] = useState(false);
    
     const { status } = useSelector((state) => state.profile)
 
@@ -35,12 +36,28 @@ const Datatable = ({ data,selectedIds,handleSelect,setModal }) => {
         setSearchQuery('');
     };
 
+    const handleSelectAll = () => {
+        setSelectAll(!selectAll);
+        if (!selectAll) {
+            // Select all visible students
+            filteredData.forEach(entry => {
+                if (!selectedIds.some(selected => selected.studentId === entry.studentId)) {
+                    handleSelect(entry.studentId, entry.firstName, entry.lastName);
+                }
+            });
+        } else {
+            // Deselect all visible students
+            filteredData.forEach(entry => {
+                if (selectedIds.some(selected => selected.studentId === entry.studentId)) {
+                    handleSelect(entry.studentId, entry.firstName, entry.lastName);
+                }
+            });
+        }
+    };
+
     // Extract selected IDs
     const getSelectedIds = () => {
-      
-       
         setModal(true);
-
     };
 
     return (
@@ -59,7 +76,14 @@ const Datatable = ({ data,selectedIds,handleSelect,setModal }) => {
             </div>
             <div className='dataTableOverflow'>
                 <div className='columnTitle'>
-                    <span className='titlelable'>Select</span>
+                    <span className='titlelable'>
+                        <input
+                            type="checkbox"
+                            className='checkBox'
+                            checked={selectAll}
+                            onChange={handleSelectAll}
+                        />
+                    </span>
                     <span className='titlelable'>StudentID </span>
                     <span className='titlelable'>Name</span>
                     <span className='titlelable'>Semester</span>

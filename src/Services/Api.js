@@ -15,6 +15,7 @@ export const MESSAGE_ENDPOINTS = {
 };
 export const STUDENTS_ENDPOINS = {
   GET: BASE_URL + "/api/v1/students/get",
+  SEND_MESSAGE: BASE_URL + "/api/v1/students/send-message"
 };
 
 export const METADATA_API = {

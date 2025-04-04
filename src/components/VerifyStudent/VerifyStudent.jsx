@@ -3,7 +3,7 @@ import s from './VerifyStudent.module.css'
 import { IoIosInformationCircleOutline } from "react-icons/io";
 import Tooltip from '@mui/material/Tooltip';
 
-const VerifyStudent = ({ setActiveStep, selectedIds, setModal }) => {
+const VerifyStudent = ({selectedIds }) => {
 
     return (
         <div className={s.conatainer}>
@@ -19,11 +19,6 @@ const VerifyStudent = ({ setActiveStep, selectedIds, setModal }) => {
                         </Tooltip>
                     ))}
                 </div>
-
-            </div>
-            <div className={s.btnContainer}>
-                <button onClick={() => setModal(false)}>Edit</button>
-                <button onClick={() => setActiveStep(1)}>Next</button>
             </div>
         </div >
     )

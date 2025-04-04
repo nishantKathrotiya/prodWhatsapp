@@ -1,6 +1,7 @@
 import React from 'react'
 import Datatable from '../../components/Datatable/Datatable'
 import s from './Test.module.css'
+import SlectMessage from '../../components/SlectMessage/SlectMessage'
 const Test = () => {
 
     const data = [
@@ -92,6 +93,7 @@ const Test = () => {
     <div className={s.dataTableFixer}>
         {/* <Datatable data={data} /> */}
         <h1>Welcome</h1>
+        <SlectMessage />
     </div>
   )
 }
