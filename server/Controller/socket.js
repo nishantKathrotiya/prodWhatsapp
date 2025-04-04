@@ -219,4 +219,76 @@ const tempSend = async (req, res) => {
 };
 
 
-module.exports = {setUpSocket,checkStatus,sendSingle,sendAll,logout,tempSend};
+const sendMessages = async (req, res) => {
+  const userId = req.user.id;
+  const { selectedIds, message } = req.body;
+
+  // Check if user is connected
+  if (!clients[userId]) {
+    return res.json({ success: false, message: 'Whatsapp not Connected' });
+  }
+  // Validate request body
+  if (!selectedIds || !message) {
+    return res.json({ success: false, message: "Data Missing" });
+  }
+
+  if (!Array.isArray(selectedIds) || selectedIds.length === 0) {
+    return res.json({ success: false, message: "No Students are selected" });
+  }
+
+  try {
+    // Extract all student IDs from the selectedIds array
+    const studentIds = selectedIds.map((student) => student.studentId);
+
+    const students = await Student.find({
+      studentId: { $in: studentIds },
+    }).select("firstName lastName homeNumber studentId _id");
+    
+    // Now map through the selectedIds to prepare the data for sending messages
+    const contactPromises = students.map(async (student) => {
+      // If no student data is found for a given student ID
+      if (student.homeNumber) {
+        // Return the object containing student name, parent contact, and student ID
+        return {
+          name: student.firstName + " " + student.lastName,
+          contactNo: "91" + student.homeNumber,
+          studentId: student.studentId,
+        };
+      }
+      return null; // Return null for students without a homeNumber
+    });
+    
+    // Resolve all contact promises
+    const contacts = await Promise.all(contactPromises);
+    
+    // Filter out any null or undefined values from the contacts array
+    const validContacts = contacts.filter(contact => contact !== null && contact !== undefined);
+    
+
+    // Map through the contacts array and send messages
+    const sendMessagePromises = validContacts.map((data) => {
+      return clients[userId].client.sendMessage(data.contactNo + '@c.us', message);
+    
+    });
+
+    // Wait for all messages to be sent
+    const responses = await Promise.all(sendMessagePromises);
+    console.log(responses)
+    // Send success response
+    res.json({ success: true, message: "Messages sent"});
+  } catch (error) {
+    // Handle errors
+    console.log(error.message);
+    res
+      .status(500)
+      .json({
+        success: false,
+        message: "Failed to send messages",
+        error: error.message,
+      });
+  }
+};
+
+
+
+module.exports = {setUpSocket,checkStatus,sendSingle,sendAll,logout,tempSend,sendMessages};

@@ -1,0 +1,68 @@
+
+.previewContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background-color: white;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    min-height: 0;
+    overflow: auto;
+}
+
+.stats {
+    display: flex;
+    gap: 2rem;
+    padding: 1.5rem;
+    background-color: #f8fafc;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+}
+
+.statItem {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.statLabel {
+    font-size: 0.875rem;
+    color: #64748b;
+}
+
+.statValue {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.messagePreview {
+    padding: 1.5rem;
+    background-color: #f8fafc;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+}
+
+.messagePreview h4 {
+    margin: 0 0 1rem 0;
+    color: var(--title-color);
+    font-weight: 600;
+}
+
+.messagePreview p {
+    margin: 0;
+    color: #475569;
+    line-height: 1.6;
+}
+
+
+
+@media (max-width: 768px) {
+    .stats {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+}

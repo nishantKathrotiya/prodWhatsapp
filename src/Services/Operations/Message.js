@@ -1,7 +1,7 @@
 import { toast } from "react-hot-toast";
 import { apiConnector } from "../Connect";
 import { MESSAGE_ENDPOINTS } from "../Api";
-import { setStatus2 } from "../../Slices/profileSlice";
+import { setLoading, setStatus2 } from "../../Slices/profileSlice";
 
 export function checkStatus(setLoading) {
   return async (dispatch) => {
@@ -27,22 +27,26 @@ export function checkStatus(setLoading) {
   };
 }
 
-export async function sendMessages(selectedIds, setSelectedIds) {
+export async function sendMessages(selectedIds, message, setLoading, setActiveStep) {
   const toastId = toast.loading("Loading...");
+  setLoading(true);
+
   try {
     const response = await apiConnector("POST", MESSAGE_ENDPOINTS.SEND_ALL, {
       selectedIds,
+      message,
     });
     if (!response.data.success) {
       throw new Error(response.data.message);
     }
     toast.success("Messages Sent!");
-    setSelectedIds([]);
+    setActiveStep(3);
   } catch (error) {
     console.log(" ERROR............", error);
     toast.error(error.message);
   }
   toast.dismiss(toastId);
+  setLoading(false);
 }
 
 export async function disconnectWhtsapp() {

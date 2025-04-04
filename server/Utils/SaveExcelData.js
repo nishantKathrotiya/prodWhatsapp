@@ -4,7 +4,7 @@ const path = require("path");
 const csv = require("csv-parser");
 const dbConnect  = require('../Config/Connect')
 
-const filePath = path.join(__dirname, "Student.csv");
+const filePath = path.join(__dirname, "Student - Copy.csv");
 
 const start = () => {
   // Read and process the CSV file
@@ -25,6 +25,7 @@ async function saveStudentData(studentData) {
       lastName: studentData["Last Name"],
       firstName: studentData["First Name"],
       middleName: studentData["Middle Name"],
+      department: studentData["department"],
       currentSemester: studentData["Current Semester"],
       division: studentData["Division"],
       counsellor:studentData['Counsellor'],
@@ -58,7 +59,7 @@ function extractFirstNumber(phoneString) {
   return numbers.length > 0 ? numbers[0] : null;
 }
 
-// dbConnect();
-// start()
+dbConnect();
+start()
 
 module.exports = { saveStudentData };

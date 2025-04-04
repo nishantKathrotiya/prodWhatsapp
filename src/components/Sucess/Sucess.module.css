@@ -1,0 +1,36 @@
+.readyContainer {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+
+.svgContainer {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    margin-bottom: 1.75rem;
+    padding: 0;
+}
+
+.svgBackground {
+    fill: #9af3c441;
+}
+
+.svgIconWrapper {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+    margin: 0;
+    padding: 0;
+}
+
+.svgIcon {
+    fill: green;
+    /* Default success color */
+}

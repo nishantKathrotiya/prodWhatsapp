@@ -1,24 +1,25 @@
 import React, { useState } from 'react'
 import s from './MessageWorkflow.module.css';
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
-import { IoCloseCircleOutline } from "react-icons/io5";
+
+import { IoPencil, IoCloseCircleOutline, IoCheckmarkDone,IoArrowForward,IoArrowBack} from "react-icons/io5";
 import VerifyStudent from '../VerifyStudent/VerifyStudent';
 import SlectMessage from '../SlectMessage/SlectMessage';
 import { toast } from 'react-hot-toast';
-import { apiConnector } from '../../Services/Connect';
-import { STUDENTS_ENDPOINS } from '../../Services/Api';
+import { sendMessages } from '../../Services/Operations/Message.js';
+import Suceess from '../Sucess/Sucess.jsx'
+import MessagesOverview from '../MessagesOverview/MessagesOverview.jsx';
+
+import Loading from '../Loading/Loading'
 
 const MessageWorkflow = ({ selectedIds, setModal }) => {
     const [activeStep, setActiveStep] = useState(0);
     const [message, setMessage] = useState('');
+    const [messageType, setMessageType] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const steps = ['Verify Students', 'Select The Message', 'Preview & Send'];
-
-    const handleMessageChange = (newMessage) => {
+    const handleMessageChange = (newMessage, type) => {
         setMessage(newMessage);
+        setMessageType(type);
     };
 
     const handleSendMessage = async () => {
@@ -27,28 +28,7 @@ const MessageWorkflow = ({ selectedIds, setModal }) => {
             return;
         }
 
-        setLoading(true);
-        try {
-            const response = await apiConnector(
-                'POST',
-                STUDENTS_ENDPOINS.SEND_MESSAGE,
-                {
-                    studentIds: selectedIds.map(student => student.studentId),
-                    message: message
-                }
-            );
-
-            if (response.data.success) {
-                toast.success('Messages sent successfully!');
-                setModal(false);
-            } else {
-                throw new Error(response.data.message);
-            }
-        } catch (error) {
-            toast.error(error.message || 'Failed to send messages');
-        } finally {
-            setLoading(false);
-        }
+        sendMessages(selectedIds,message,setLoading,setActiveStep)
     };
 
     const renderStepContent = (step) => {
@@ -59,26 +39,10 @@ const MessageWorkflow = ({ selectedIds, setModal }) => {
                 return <SlectMessage onMessageChange={handleMessageChange} />;
             case 2:
                 return (
-                    <div className={s.previewContainer}>
-                        <div className={s.statsContainer}>
-                            <h3>Message Preview</h3>
-                            <div className={s.stats}>
-                                <div className={s.statItem}>
-                                    <span className={s.statLabel}>Total Students:</span>
-                                    <span className={s.statValue}>{selectedIds.length}</span>
-                                </div>
-                                <div className={s.statItem}>
-                                    <span className={s.statLabel}>Message Type:</span>
-                                    <span className={s.statValue}>{message ? 'Custom' : 'Template'}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div className={s.messagePreview}>
-                            <h4>Message Content:</h4>
-                            <p>{message || 'No message selected'}</p>
-                        </div>
-                    </div>
+                   <MessagesOverview selectedIds={selectedIds} message={message} messageType={messageType} />
                 );
+            case 3:
+                return <Suceess />;
             default:
                 return null;
         }
@@ -92,30 +56,68 @@ const MessageWorkflow = ({ selectedIds, setModal }) => {
                     <IoCloseCircleOutline className={s.fixIcon} onClick={() => setModal(false)} />
                 </div>
 
-                <Stepper activeStep={activeStep} alternativeLabel className={s.stepper}>
-                    {steps.map((label) => (
-                        <Step key={label} className={s.step}>
-                            <StepLabel className={s.stepperLabel}>{label}</StepLabel>
-                        </Step>
-                    ))}
-                </Stepper>
-
                 <div className={s.componentContainer}>
-                    {renderStepContent(activeStep)}
-                    <div className={s.btnContainer}>
-                        {activeStep === 0 && <button onClick={() => setModal(false)}>Edit</button>}
-                        {activeStep !== 0 && <button onClick={() => setActiveStep(prevStep => prevStep - 1)}>Go Back</button>}
-                        {activeStep !== 2 && <button onClick={() => setActiveStep(prevStep => prevStep + 1)}>Next</button>}
-                        {activeStep === 2 && (
-                            <button 
-                                onClick={handleSendMessage} 
-                                disabled={loading}
-                                className={loading ? s.disabled : ''}
-                            >
-                                {loading ? 'Sending...' : 'Send Message'}
-                            </button>
-                        )}
-                    </div>
+                    {
+                        loading ? (
+                            <Loading />
+                        ) : (
+                            <>
+                                {renderStepContent(activeStep)}
+                                <div className={s.btnContainer}>
+                                    {activeStep === 0 && (
+                                        <button onClick={() => setModal(false)}>
+                                            <IoPencil className={s.btnIcon} />
+                                            Edit Selection
+                                        </button>
+                                    )}
+                                    {(activeStep !== 0) && (activeStep !== 3) && (
+                                        <button onClick={() => setActiveStep(prevStep => prevStep - 1)}>
+                                            <IoArrowBack className={s.btnIcon} />
+                                            Go Back
+                                        </button>
+                                    )}
+                                    {(activeStep !== 2) && (activeStep !== 3) && (
+                                        <button onClick={() => setActiveStep(prevStep => prevStep + 1)} className={s.nextBtn}>
+                                            Next
+                                            <IoArrowForward className={s.btnIcon} />
+                                        </button>
+                                    )}
+                                    {activeStep === 2 && (
+                                        <button
+                                            onClick={handleSendMessage}
+                                            disabled={loading}
+                                            className={`${s.sendBtn} ${loading  ? s.disabled : ''}`}
+                                        >
+                                            {loading ? (
+                                                <div className={s.pandaContainer}>
+                                                    <div className={s.pandaAnimation}></div>
+                                                    <span>Sending...</span>
+                                                </div>
+                                            ) : (
+                                                <>
+                                                    <IoCheckmarkDone className={s.btnIcon} />
+                                                    Send Message
+                                                </>
+                                            )}
+                                        </button>
+                                    )}
+
+                                    {activeStep === 3 && (
+                                        <button
+                                            onClick={() => setModal(false)}
+                                            className={s.sendBtn}
+                                        >
+                                            <span className={s.centerClose}>
+                                                <IoCloseCircleOutline  className={s.btnIcon} />
+                                                Close
+                                            </span>
+                                        </button>
+                                    )}
+
+                                </div>
+                            </>
+                        )
+                    }
                 </div>
             </div>
         </div>

@@ -12,11 +12,14 @@
 }
 
 .workFlowBox {
-    width: 90%;
-    max-width: 800px;
     background-color: white;
-    border-radius: 12px;
-    padding: 20px;
+    border-radius: 16px;
+    padding: 2rem;
+    width: 90%;
+    max-width: 900px;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
@@ -24,30 +27,33 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #f3f4f6;
 }
 
 .workFlowTitleContainer h2 {
     color: var(--title-color);
     font-size: 24px;
     margin: 0;
+    font-weight: 600;
 }
 
 .fixIcon {
     font-size: 24px;
     color: var(--text-color);
     cursor: pointer;
-    transition: color 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .fixIcon:hover {
     color: var(--error-color);
+    transform: rotate(90deg);
 }
 
 .stepper {
-    margin-bottom: 30px;
+    margin-bottom: 2rem;
+    padding: 0 1rem;
 }
 
 .step {
@@ -56,119 +62,156 @@
 
 .stepperLabel {
     font-size: 14px;
+    font-weight: 500;
     color: var(--text-color);
 }
 
 .componentContainer {
-    min-height: 400px;
+    flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    overflow: auto;
+    padding: 1rem;
+    /* background-color: #f8fafc; */
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
 .btnContainer {
     display: flex;
     justify-content: space-between;
-    margin-top: 20px;
-    padding-top: 20px;
-    border-top: 1px solid var(--border-color);
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 2px solid #f3f4f6;
 }
 
 .btnContainer button {
-    padding: 10px 20px;
-    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.875rem 1.75rem;
+    border-radius: 10px;
     border: none;
-    font-size: 14px;
+    font-weight: 600;
+    font-size: 0.95rem;
     cursor: pointer;
     transition: all 0.3s ease;
-}
-
-.btnContainer button:first-child {
-    background-color: var(--border-color);
-    color: var(--text-color);
-}
-
-.btnContainer button:last-child {
-    background-color: var(--primary-color);
-    color: white;
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    color: #475569;
 }
 
 .btnContainer button:hover {
-    opacity: 0.9;
-    transform: translateY(-1px);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.btnContainer button:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    transform: none;
+.nextBtn {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
+    color: white !important;
 }
+
+.nextBtn:hover {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
+}
+
+.sendBtn {
+    background: linear-gradient(135deg, #10B981 0%, #059669 100%) !important;
+    color: white !important;
+}
+
+.sendBtn:hover {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+}
+
+.btnIcon {
+    font-size: 1.25rem;
+    transition: transform 0.3s ease;
+}
+
+.btnContainer button:hover .btnIcon {
+    transform: translateX(2px);
+}
+
+.disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+
 
 .previewContainer {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    padding: 20px;
-    background-color: var(--background-color);
-    border-radius: 8px;
-}
-
-.statsContainer {
+    gap: 1.5rem;
+    padding: 1.5rem;
     background-color: white;
-    padding: 20px;
-    border-radius: 8px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-}
-
-.statsContainer h3 {
-    margin: 0 0 15px 0;
-    color: var(--title-color);
+    min-height: 0;
+    overflow: auto;
 }
 
 .stats {
     display: flex;
-    gap: 20px;
+    gap: 2rem;
+    padding: 1.5rem;
+    background-color: #f8fafc;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
 }
 
 .statItem {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 0.5rem;
 }
 
 .statLabel {
-    font-size: 14px;
-    color: var(--text-color);
+    font-size: 0.875rem;
+    color: #64748b;
 }
 
 .statValue {
-    font-size: 18px;
+    font-size: 1.125rem;
     font-weight: 600;
-    color: var(--title-color);
+    color: #1e293b;
 }
 
 .messagePreview {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    padding: 1.5rem;
+    background-color: #f8fafc;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
 }
 
 .messagePreview h4 {
-    margin: 0 0 10px 0;
+    margin: 0 0 1rem 0;
     color: var(--title-color);
+    font-weight: 600;
 }
 
 .messagePreview p {
     margin: 0;
-    color: var(--text-color);
-    line-height: 1.5;
+    color: #475569;
+    line-height: 1.6;
+}
+
+.centerClose{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 }
 
 @media (max-width: 768px) {
     .workFlowBox {
         width: 95%;
-        padding: 15px;
+        padding: 1.5rem;
     }
 
     .workFlowTitleContainer h2 {
@@ -179,17 +222,18 @@
         font-size: 12px;
     }
 
-    .componentContainer {
-        min-height: 300px;
-    }
-
     .stats {
         flex-direction: column;
-        gap: 10px;
+        gap: 1rem;
+    }
+
+    .btnContainer {
+        flex-direction: column;
     }
 
     .btnContainer button {
-        padding: 8px 15px;
-        font-size: 12px;
+        width: 100%;
+        justify-content: center;
     }
 }
+

@@ -3,7 +3,7 @@ const Student = require("../Modal/Student");
 
 const upsertMetadata = async (req, res) => {
   try {
-    const { department } = req.query;
+    const { department,year } = req.query;
 
     if (!department) {
       return res.json({
@@ -44,7 +44,7 @@ const upsertMetadata = async (req, res) => {
       // Check if metadata entry exists for the department and division
       let metadataEntry = await Metadata.findOne({
         department: department,
-        year: 3, // Assuming "year 3" is fixed for all students. You can make this dynamic if needed
+        year: year, // Assuming "year 3" is fixed for all students. You can make this dynamic if needed
         division: division,
       });
 
@@ -59,7 +59,7 @@ const upsertMetadata = async (req, res) => {
         // If no entry exists, create a new metadata entry
         const newMetadata = new Metadata({
           department: department,
-          year: 3, // Assuming "year 3" for all, can adjust dynamically
+          year: year, // Assuming "year 3" for all, can adjust dynamically
           division: division,
           batches: batches, // Initialize batches for this division
         });
