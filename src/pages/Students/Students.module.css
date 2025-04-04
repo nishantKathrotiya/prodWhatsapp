@@ -2,34 +2,39 @@
     width: 100%;
     overflow-y: scroll;
     padding: 20px;
+    background-color: #f8fafc;
 }
 
 .studentFetch {
     gap: 20px;
-    padding: 10px;
+    padding: 20px;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     flex-direction: column;
     justify-content: space-between;
-    border-radius: 8px;
+    border-radius: 12px;
     background-color: #fff;
     color: var(--title-color);
-    border: 1px solid var(--placeholder-color);
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    margin-bottom: 20px;
 }
 
 .fieldsConatainer {
     display: flex;
-    gap: 10px;
+    gap: 16px;
     flex-direction: column;
+    width: 100%;
+    max-width: 800px;
 }
 
 .selectConatiner {
     display: flex;
-
     gap: 20px;
-    width: 500px;
-    max-width: 90%;
+    width: 100%;
+    max-width: 800px;
     overflow: hidden;
     flex-wrap: wrap;
     justify-content: center;
@@ -40,46 +45,136 @@
     gap: 10px;
     display: flex;
     justify-content: center;
+    align-items: center;
+    margin: 5px 0;
+}
+
+.checkConatainer input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #3b82f6;
+    cursor: pointer;
+}
+
+.checkConatainer label {
+    font-size: 14px;
+    color: #374151;
+    cursor: pointer;
 }
 
 .optionConatainer {
     flex: 1 1 45%;
-    width: fit-content;
+    min-width: 200px;
     display: flex;
-    gap: 3px;
+    gap: 8px;
     flex-direction: column;
-    font-size: small;
+}
+
+.optionConatainer label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
 }
 
 .optionConatainer select {
-    padding: 4px;
-    font-size: small !important;
-    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 14px !important;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    background-color: #f9fafb;
+    transition: all 0.2s ease;
+    color: #1f2937;
+    outline: none;
+    cursor: pointer;
+}
+
+.optionConatainer select:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.optionConatainer select:disabled {
+    background-color: #f3f4f6;
+    color: #9ca3af;
+    cursor: not-allowed;
+    border-color: #e5e7eb;
 }
 
 .studentFetch button {
     max-width: 250px;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.studentFetch button:hover {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .disabled {
-    cursor: not-allowed;
+    opacity: 0.7 !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+.disabled:hover {
+    transform: none !important;
+    box-shadow: none !important;
 }
 
 .active {
     cursor: pointer;
 }
 
+.fullWidthH2 {
+    width: 100%;
+    font-size: 24px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 20px;
+    text-align: center;
+    position: relative;
+    padding-bottom: 10px;
+}
 
+.fullWidthH2::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 3px;
+    background: linear-gradient(90deg, #3b82f6, #2563eb);
+    border-radius: 3px;
+}
 
 /* Media query for mobile */
 @media (max-width: 768px) {
     .studentFetch {
         align-items: center;
+        padding: 16px;
     }
 
     .studentFetch button {
-        max-width: 90%;
+        max-width: 100%;
         margin: 0 auto;
+        padding: 10px 20px;
+        font-size: 14px;
     }
 
     .selectConatiner {
@@ -87,7 +182,7 @@
         align-items: center;
         justify-content: center;
         flex-direction: column;
-        gap: 5px;
+        gap: 12px;
     }
 
     .fieldsConatainer {
@@ -95,18 +190,36 @@
         flex-direction: column;
         align-items: center;
         width: 100%;
+        gap: 12px;
     }
 
     .optionConatainer {
         width: 100%;
+        min-width: unset;
     }
 
-    label {
-        font-size: small;
+    .optionConatainer label {
+        font-size: 13px;
+    }
+
+    .optionConatainer select {
+        padding: 8px 12px;
+        font-size: 13px !important;
+    }
+
+    .fullWidthH2 {
+        font-size: 20px;
     }
 }
 
+.inputIcon {
+    margin-right: 5px;
+    font-size: 16px;
+    color: #4b5563;
+    vertical-align: middle;
+}
 
-.fullWidthH2 {
-    width: 100%;
+.checkConatainer .inputIcon {
+    margin-right: 5px;
+    color: #3b82f6;
 }

@@ -5,6 +5,7 @@ import { getStudents } from '../../Services/Operations/Student';
 import { toast } from 'react-hot-toast'
 import Datatable from '../../components/Datatable/Datatable';
 import MessageWorkflow from '../../components/MessageWorkflow/MessageWorkflow';
+import { IoSearch, IoSchool, IoBookOutline, IoGridOutline, IoLayersOutline, IoCheckmarkCircleOutline } from "react-icons/io5";
 
 const Students = () => {
   const [formData, setFormData] = useState({
@@ -41,13 +42,14 @@ const Students = () => {
     }));
   };
 
-  // Mock data for Divisions and Batches (replace with actual API calls)
+  // Fetch Divisions
   const fetchDivisions = async () => {
     if (formData.department && formData.year) {
       getDivison(formData.department, formData.year, setDivisions);
     }
   };
 
+  // Fetch Batches
   const fetchBatches = async () => {
     if (formData.department && formData.year && formData.division && formData.division != 'all') {
       getbatches(formData.department, formData.year, formData.division, setBatches);
@@ -109,101 +111,114 @@ const Students = () => {
     fetchBatches();
   }, [formData.department, formData.year, formData.division]);
 
-
-
   return (
-    
-      <div className={s.sConatiner}>
-        <div className={s.studentFetch}>
-          <h2 className={s.fullWidthH2}>Select Students</h2>
-          <div className={s.fieldsConatainer}>
-
-            <div className={s.selectConatiner}>
-              <div className={s.optionConatainer}>
-                <label htmlFor="">Select Department</label>
-                <select
-                  value={formData.department}
-                  onChange={(e) => handleFormChange('department', e.target.value)}
-                >
-                  <option value="">--Select Department--</option>
-                  <option value="IT">IT</option>
-                  <option value="CE">CE</option>
-                  <option value="CSE">CSE</option>
-                </select>
-              </div>
-
-              <div className={s.optionConatainer}>
-                <label htmlFor="">Select Year</label>
-                <select
-                  value={formData.year}
-                  onChange={(e) => handleFormChange('year', e.target.value)}
-                >
-                  <option value="">--Select Year--</option>
-                  <option value="1">First</option>
-                  <option value="2">Second</option>
-                  <option value="3">Third</option>
-                  <option value="4">Forth</option>
-                </select>
-              </div>
-
-              <div className={s.optionConatainer}>
-                <label htmlFor="">Select Division</label>
-                <select
-                  value={formData.division}
-                  onChange={(e) => handleFormChange('division', e.target.value)}
-                  disabled={!divisions.length}
-                >
-                  <option value="">--Select Division--</option>
-                  <option value="all">All Divison</option>
-                  {divisions.map((div, index) => (
-                    <option key={index} value={div}>
-                      {div}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div className={s.optionConatainer}>
-                <label htmlFor="">Select Batch</label>
-                <select
-                  value={formData.batch}
-                  onChange={(e) => handleFormChange('batch', e.target.value)}
-                  disabled={!batches.length || formData.myCounselling}
-                >
-                  <option value="">--Select Batch--</option>
-                  <option value="all">All Batches</option>
-                  {batches.map((b, index) => (
-                    <option key={index} value={b}>
-                      {b}
-                    </option>
-                  ))}
-                </select>
-              </div>
+    <div className={s.sConatiner}>
+      <div className={s.studentFetch}>
+        <h2 className={s.fullWidthH2}>Select Students</h2>
+        <div className={s.fieldsConatainer}>
+          <div className={s.selectConatiner}>
+            <div className={s.optionConatainer}>
+              <label htmlFor="department">
+                <IoSchool className={s.inputIcon} /> Department
+              </label>
+              <select
+                id="department"
+                value={formData.department}
+                onChange={(e) => handleFormChange('department', e.target.value)}
+              >
+                <option value="">--Select Department--</option>
+                <option value="IT">IT</option>
+                <option value="CE">CE</option>
+                <option value="CSE">CSE</option>
+              </select>
             </div>
 
-            <div className={s.checkConatainer}>
-              <input
-                type="checkbox"
-                id="myConusilling"
-                name="myConusilling"
-                checked={formData.myCounselling}
-                onChange={(e) => handleFormChange('myCounselling', e.target.checked)}
-              />
-              <label htmlFor="myConusilling">My Consilling Students only</label>
+            <div className={s.optionConatainer}>
+              <label htmlFor="year">
+                <IoBookOutline className={s.inputIcon} /> Year
+              </label>
+              <select
+                id="year"
+                value={formData.year}
+                onChange={(e) => handleFormChange('year', e.target.value)}
+              >
+                <option value="">--Select Year--</option>
+                <option value="1">First</option>
+                <option value="2">Second</option>
+                <option value="3">Third</option>
+                <option value="4">Forth</option>
+              </select>
             </div>
 
+            <div className={s.optionConatainer}>
+              <label htmlFor="division">
+                <IoGridOutline className={s.inputIcon} /> Division
+              </label>
+              <select
+                id="division"
+                value={formData.division}
+                onChange={(e) => handleFormChange('division', e.target.value)}
+                disabled={!divisions.length}
+              >
+                <option value="">--Select Division--</option>
+                <option value="all">All Divison</option>
+                {divisions.map((div, index) => (
+                  <option key={index} value={div}>
+                    {div}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className={s.optionConatainer}>
+              <label htmlFor="batch">
+                <IoLayersOutline className={s.inputIcon} /> Batch
+              </label>
+              <select
+                id="batch"
+                value={formData.batch}
+                onChange={(e) => handleFormChange('batch', e.target.value)}
+                disabled={!batches.length || formData.myCounselling}
+              >
+                <option value="">--Select Batch--</option>
+                <option value="all">All Batches</option>
+                {batches.map((b, index) => (
+                  <option key={index} value={b}>
+                    {b}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
 
-          <button onClick={fetchDataHandler} disabled={loading} className={loading ? (`${s.disabled}`) : (`${s.active}`)}>
-            {!loading ? ('Fetch') : ('Loading..')}
-          </button>
-
+          <div className={s.checkConatainer}>
+            <input
+              type="checkbox"
+              id="myConusilling"
+              name="myConusilling"
+              checked={formData.myCounselling}
+              onChange={(e) => handleFormChange('myCounselling', e.target.checked)}
+            />
+            <label htmlFor="myConusilling">
+              <IoCheckmarkCircleOutline className={s.inputIcon} /> My Consilling Students only
+            </label>
+          </div>
         </div>
-        <Datatable data={students} selectedIds={selectedIds} handleSelect={handleSelect} setModal={setModal} />
-        {openModal && <MessageWorkflow selectedIds={selectedIds} setModal={setModal} />}
 
+        <button onClick={fetchDataHandler} disabled={loading} className={loading ? s.disabled : s.active}>
+          {!loading ? (
+            <>
+              <IoSearch /> Fetch Students
+            </>
+          ) : (
+            'Loading...'
+          )}
+        </button>
       </div>
-    
+      
+      <Datatable data={students} selectedIds={selectedIds} handleSelect={handleSelect} setModal={setModal} />
+      {openModal && <MessageWorkflow selectedIds={selectedIds} setModal={setModal} />}
+    </div>
   );
 };
 

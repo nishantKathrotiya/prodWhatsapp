@@ -8,8 +8,11 @@ import OneTimePassword from './pages/OneTimePassword/OneTimePassword';
 import OpenRoute from './components/OpenRoute';
 import PrivateRoute from './components/PrivateRoute';
 import DashboardLayout from './components/DashboardLayout/DashboardLayout';
-import Test from './pages/Test/Test'
+import Dashboard from './pages/Dashboard/Dashboard';
 import Students from './pages/Students/Students';
+import History from './pages/History/History';
+import AddStudents from './pages/AddStudents/AddStudents';
+
 function App() {
 
 
@@ -24,8 +27,10 @@ function App() {
           <Route path="/forgot-password" element={<OpenRoute><ForgotPassword /></OpenRoute>}/>
         </Route>
         <Route path="/admin" element={<><DashboardLayout /></>}>
-          <Route path="/admin" element={<Test />} /> 
+          <Route path="/admin" element={<Dashboard />} /> 
           <Route path="/admin/students" element={<Students />} />
+          <Route path="/admin/history" element={<History />} />
+          <Route path="/admin/addstudents" element={<AddStudents />} />
         </Route>
       </Routes>
       

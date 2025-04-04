@@ -1,43 +1,61 @@
 .dataTableContainer {
     width: 100%;
     height: 85vh;
-    padding: 10px;
-    margin-top:20px;
-    border-radius: 8px;
-    font-family: Poppins, sans-serif;
-    border: 1px solid var(--border-color);
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 12px;
+    font-family: 'Poppins', sans-serif;
+    border: 1px solid #e2e8f0;
     background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
 }
 
 .titleRow {
     width: 100%;
-    padding: 10px;
+    padding: 15px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 2px solid #f3f4f6;
+    margin-bottom: 15px;
 }
 
 .searchDiv {
-    width: 30%;
     display: flex;
     gap: 15px;
     align-items: center;
-    justify-content: space-around;
+    justify-content: flex-end;
 }
 
 .searchDiv input {
-    width: 60%;
-    padding: 5px;
+    min-width: 250px;
+    padding: 10px 15px;
     outline: none;
-    border-radius: 5px;
-    border: 1px solid gray;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    font-size: 14px;
+    background-color: #f9fafb;
+    transition: all 0.2s ease;
 }
-.iconFix{
+
+.searchDiv input:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.iconFix {
     height: 100%;
-    font-size: x-large;
+    font-size: 24px;
     cursor: pointer;
-}   
+    color: #6b7280;
+    transition: all 0.2s ease;
+}
+
+.iconFix:hover {
+    color: #4b5563;
+    transform: scale(1.1);
+}
 
 .searchDiv button {
     border: none;
@@ -53,158 +71,152 @@
 }
 
 .headertext {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     font-weight: 600;
+    color: #1f2937;
 }
 
 .dataTableOverflow {
-    overflow-y: scroll;
-    height: calc(100% - 60px);
+    overflow-y: auto;
+    height: calc(100% - 80px);
     width: 100%;
     position: relative;
+    border-radius: 8px;
 }
 
 .columnTitle {
     width: fit-content;
     min-width: 100%;
-    padding: 10px;
+    padding: 15px;
     display: flex;
     gap: 10px;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid #ccc;
-    background-color: #f9f9f9;
+    border-bottom: 1px solid #e5e7eb;
+    background-color: #f8fafc;
     position: sticky;
     top: 0;
     z-index: 10;
-    box-shadow: rgba(0, 0, 0, 0.147) 0px 1px 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    border-radius: 8px 8px 0 0;
 }
 
-.titleLabel {
-    /* min-width: 120px; */
-    /* min-width: 440px !important; */
-    gap: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.modalBackdrop {
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 20;
+.titlelable {
+    font-weight: 600;
+    color: #4b5563;
+    font-size: 14px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(5px);
 }
 
-.problemContainer {
-    width: 60%;
-    height: 60%;
-    padding: 20px;
-    border-radius: 20px;
-    background-color: #f9f9f9;
-    border: 1px solid gray;
+.titlelable input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #3b82f6;
+    cursor: pointer;
+    margin-right: 5px;
 }
 
-.problemSection {
+.searchInputWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 280px;
+}
+
+.searchIcon {
+    position: absolute;
+    left: 10px;
+    font-size: 18px;
+    color: #6b7280;
+}
+
+.searchInputWrapper input {
+    padding-left: 35px; /* Space for the icon */
     width: 100%;
-    height: 100%;
 }
 
-.titleSection {
-    width: 100%;
-    height: fit-content;
+.noDataMessage {
+    text-align: center;
+    padding: 30px;
+}
+
+.noDataMessage h3 {
+    margin-bottom: 10px;
+    color: #6b7280;
+    font-weight: 500;
+}
+
+.noDataMessage p {
+    color: #9ca3af;
+}
+
+.tableFooter {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 15px;
+    background-color: #f8fafc;
+    border-top: 1px solid #e5e7eb;
+    border-radius: 0 0 8px 8px;
 }
 
-.titleSection p {
-    font-size: 1.3rem;
-    font-weight: 700;
-}
-
-.iconlarge {
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
-}
-
-.probleTextSection {
-    width: 100%;
-    height: 70%;
-    padding: 10px;
-    padding-top: 10px;
-    border-radius: 10px;
-    border: 1px solid gray;
-    background-color: white;
-    overflow: scroll;
-}
-
-.problemName {
-    width: 100%;
-    height: 15%;
-    margin: 10px 0;
-    padding: 10px;
-    padding-top: 0;
-    border-radius: 10px;
-    border: 1px solid gray;
-    background-color: white;
+.selectedCountContainer {
     display: flex;
     align-items: center;
+    gap: 8px;
+    color: #4b5563;
+    font-size: 14px;
 }
 
-.downloadBtnConatinerAtUser {
-    width: 50px;
-    height: 50px;
-    bottom: -40%;
-    right: 5%;
-
-    position: absolute;
+.selectedIcon {
+    color: #3b82f6;
+    font-size: 18px;
 }
 
-.downloadBtnConatinerAtUser button {
-    height: 100%;
-    width: 100%;
-    font-size: larger;
-    border-radius: 50%;
-    padding: 5px;
-    outline: none;
+.btm {
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
     cursor: pointer;
-    border: 1px solid gray;
-    background-color: #ffffff;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-
-.downloadBtnConatiner {
-    width: 50px;
-    height: 50px;
-    right: 6%;
-    bottom: 7.5%;
-    position: absolute;
-
+.btm:hover {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.downloadBtnConatiner button {
+.btm:disabled {
+    background: linear-gradient(135deg, #9ca3af, #6b7280);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.loadingCenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 100%;
-    width: 100%;
-    font-size: larger;
-    border-radius: 50%;
-    padding: 5px;
-    outline: none;
-    cursor: pointer;
-    border: 1px solid gray;
-    background-color: #ffffff;
+    color: #6b7280;
+    font-weight: 500;
 }
 
+/* Media queries */
 @media (max-width:760px) {
     .headertext {
-        font-size: 0.8rem;
+        font-size: 1.2rem;
     }
 
     .searchDiv {
@@ -213,68 +225,61 @@
     }
 
     .dataTableOverflow {
-        font-size: 0.7rem;
-    }
-
-    .searchDiv input {
-        height: 20px;
-        padding: 10px;
-        font-size: 0.7rem;
-        height: 100%;
-    }
-
-    .iconMedium {
-        height: 20px;
-        width: 20px;
-    }
-
-    .problemContainer {
-        width: 90%;
-        height: 60%;
         font-size: 0.8rem;
     }
 
-    .titleLabel {
-        min-width: 100px;
+    .searchDiv input {
+        min-width: unset;
+        padding: 8px 12px;
+        font-size: 13px;
     }
 
-    .lastLine {
-        margin-right: 0;
+    .iconFix {
+        font-size: 20px;
+    }
+
+    .btm {
+        padding: 8px 16px;
+        font-size: 13px;
+    }
+
+    .columnTitle {
+        padding: 10px;
+    }
+
+    .titlelable {
+        font-size: 12px;
+    }
+}
+
+/* For smaller screens */
+@media (max-width:576px) {
+    .dataTableContainer {
+        padding: 15px;
+    }
+
+    .titleRow {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+    }
+
+    .searchDiv {
+        width: 100%;
+        justify-content: space-between;
     }
 
     .searchDiv input {
-        width: 50%;
-        padding: 5px;
-        font-size: x-small;
+        width: 60%;
     }
 
-    .downloadBtnConatinerAtUser {
-        bottom: -83%;
-        right: 4%;
+    .searchInputWrapper {
+        width: 100%;
     }
-}
-
-
-
-@media (max-width:960px) {
-    .downloadBtnConatinerAtUser {
-        bottom: -83%;
-        right: 4%;
+    
+    .tableFooter {
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px;
     }
-}
-
-.btm {
-    color: var(--h3-color);
-    width: max-content;
-    border: 1px solid gray !important;
-    border-radius: 4px !important;
-    padding: 5px 10px !important;
-    cursor: pointer;
-    margin: 0;
-}
-
-.searchDiv{
-    /* background-color: red; */
-    justify-content: end;
-    align-items: center;
 }

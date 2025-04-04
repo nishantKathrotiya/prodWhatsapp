@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Dataview from '../Dataview/Dataview';
 import { MdFilterAltOff } from "react-icons/md";
+import { IoSearch, IoSend, IoCheckmarkCircleOutline } from "react-icons/io5";
 import './Datatable.css';
 import { toast } from 'react-hot-toast';
 import { useSelector } from 'react-redux';
@@ -57,21 +58,31 @@ const Datatable = ({ data, selectedIds, handleSelect, setModal }) => {
 
     // Extract selected IDs
     const getSelectedIds = () => {
+        if (selectedIds.length === 0) {
+            toast.error('Please select at least one student');
+            return;
+        }
         setModal(true);
     };
 
     return (
-       <>
-         <div className='dataTableContainer'>
+        <div className='dataTableContainer'>
             <div className='titleRow'>
-                <div className='headertext'>Students</div>
+                <div className='headertext'>Student Records</div>
                 <div className='searchDiv'>
-                    <input
-                        value={searchQuery}
-                        placeholder='Enter name or studentID'
-                        onChange={(e) => handleSearchChange(e)} />
-                    <MdFilterAltOff className='iconFix' onClick={clearFilters} />
-                    <button onClick={getSelectedIds} className='btm'>Send</button>
+                    <div className='searchInputWrapper'>
+                        <IoSearch className='searchIcon' />
+                        <input
+                            value={searchQuery}
+                            placeholder='Search by name or ID'
+                            onChange={(e) => handleSearchChange(e)}
+                        />
+                    </div>
+                    <MdFilterAltOff className='iconFix' onClick={clearFilters} title="Clear filters" />
+                    <button onClick={getSelectedIds} className='btm' disabled={selectedIds.length === 0}>
+                        <IoSend />
+                        <span>Send ({selectedIds.length})</span>
+                    </button>
                 </div>
             </div>
             <div className='dataTableOverflow'>
@@ -84,15 +95,20 @@ const Datatable = ({ data, selectedIds, handleSelect, setModal }) => {
                             onChange={handleSelectAll}
                         />
                     </span>
-                    <span className='titlelable'>StudentID </span>
+                    <span className='titlelable'>StudentID</span>
                     <span className='titlelable'>Name</span>
                     <span className='titlelable'>Semester</span>
-                    <span className='titlelable'>divison</span>
-                    <span className='titlelable '>Batch</span>
+                    <span className='titlelable'>Division</span>
+                    <span className='titlelable'>Batch</span>
                 </div>
                 {
                     filteredData.length === 0 ? (
-                        <div className='loadingCenter'><h1>No Data Found</h1></div>
+                        <div className='loadingCenter'>
+                            <div className='noDataMessage'>
+                                <h3>No Students Found</h3>
+                                <p>Try changing your search criteria</p>
+                            </div>
+                        </div>
                     ) : (
                         <>
                             {filteredData.map((entry, i) => (
@@ -103,12 +119,17 @@ const Datatable = ({ data, selectedIds, handleSelect, setModal }) => {
                                     isSelected={selectedIds.some((selectedEntry) => selectedEntry.studentId === entry.studentId)}
                                 />
                             ))}
+                            <div className="tableFooter">
+                                <div className="selectedCountContainer">
+                                    <IoCheckmarkCircleOutline className="selectedIcon" />
+                                    <span>{selectedIds.length} student{selectedIds.length !== 1 ? 's' : ''} selected</span>
+                                </div>
+                            </div>
                         </>
                     )
                 }
             </div>
         </div>
-       </>
     );
 };
 

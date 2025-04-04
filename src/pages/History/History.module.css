@@ -1,0 +1,251 @@
+.historyContainer {
+  width: 100%;
+  height: fit-content;
+  padding: 20px;
+  background-color: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.historyHeader {
+  gap: 20px;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 12px;
+  background-color: #fff;
+  color: var(--title-color);
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  margin-bottom: 20px;
+  flex-shrink: 0;
+}
+
+.fullWidthH2 {
+  width: 100%;
+  font-size: 24px;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 20px;
+  text-align: center;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.fullWidthH2::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 3px;
+  background: linear-gradient(90deg, #3b82f6, #2563eb);
+  border-radius: 3px;
+}
+
+.filterToggle {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.filterToggleBtn {
+  padding: 8px 16px;
+  background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+  color: #4b5563;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.filterToggleBtn:hover {
+  background: linear-gradient(135deg, #e2e8f0, #d1d5db);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.filtersContainer {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  border-top: 1px solid #e5e7eb;
+  padding-top: 20px;
+  margin-top: 10px;
+}
+
+.filterGroup {
+  flex: 1 1 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.filterGroup label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.filterGroup input {
+  padding: 10px 14px;
+  font-size: 14px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  background-color: #f9fafb;
+  transition: all 0.2s ease;
+  color: #1f2937;
+  outline: none;
+}
+
+.filterGroup input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.datePickerContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.datePicker {
+  padding: 10px 14px;
+  font-size: 14px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  background-color: #f9fafb;
+  transition: all 0.2s ease;
+  color: #1f2937;
+  outline: none;
+  flex: 1;
+}
+
+.datePicker:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.dateRangeSeparator {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.filterActions {
+  flex: 1 1 100%;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.applyFilterBtn {
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.applyFilterBtn:hover {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.clearFilterBtn {
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+  color: #4b5563;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.clearFilterBtn:hover {
+  background: linear-gradient(135deg, #e2e8f0, #d1d5db);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.inputIcon {
+  margin-right: 3px;
+  font-size: 16px;
+  color: #4b5563;
+  vertical-align: middle;
+}
+
+/* Disabled states */
+.applyFilterBtn:disabled,
+.clearFilterBtn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Media query for mobile */
+@media (max-width: 768px) {
+  .historyHeader {
+    padding: 16px;
+  }
+  
+  .fullWidthH2 {
+    font-size: 20px;
+  }
+  
+  .filtersContainer {
+    gap: 16px;
+  }
+  
+  .filterGroup {
+    flex: 1 1 100%;
+  }
+  
+  .datePickerContainer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .filterActions {
+    flex-direction: column;
+  }
+  
+  .applyFilterBtn,
+  .clearFilterBtn {
+    width: 100%;
+  }
+} 
