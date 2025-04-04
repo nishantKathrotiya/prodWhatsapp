@@ -30,3 +30,10 @@ dist-ssr
 ./node_modules
 ./server/Utils/Student.csv
 server/Utils/Student.csv
+
+
+.wwebjs_auth
+.wwebjs_cache
+
+server/.wwebjs_auth
+/server/.wwebjs_cache
