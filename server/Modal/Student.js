@@ -4,7 +4,7 @@ const StudentSchema = new mongoose.Schema({
   studentId: { type: String, required: true, unique: true },
   lastName: String,
   firstName: String,
-  middleName: String,
+  fatherName: String,
   currentSemester: Number,
   division: String,
   batch: String,
@@ -16,8 +16,7 @@ const StudentSchema = new mongoose.Schema({
   },
   personalNumber: { type: String, default: null },
   homeNumber: { type: String, default: null },
-  emergencyNumber: { type: String, default: null },
-  year:Number,
+  year: Number,
 });
 
 module.exports = mongoose.model("Student", StudentSchema);

@@ -24,7 +24,7 @@ async function saveStudentData(studentData) {
       studentId: studentData["Roll No"],
       lastName: studentData["Last Name"],
       firstName: studentData["First Name"],
-      middleName: studentData["Middle Name"],
+      middleName: studentData["Father Name"],
       department: studentData["department"],
       currentSemester: studentData["Current Semester"],
       division: studentData["Division"],

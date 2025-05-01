@@ -1,102 +1,158 @@
 const Metadata = require("../Modal/ClassMetaData");
 const Student = require("../Modal/Student");
 
+
+// const upsertMetadata = async () => {
+//   try {
+//     // Get all unique departments and years from students
+//     const departments = await Student.distinct('department');
+//     const years = await Student.distinct('year');
+
+//     // Process each department and year combination
+//     for (const department of departments) {
+//       for (const year of years) {
+//         // Get all students for this department and year
+//         const students = await Student.find({ department, year });
+
+//         // Get unique divisions for this department and year
+//         const divisions = [...new Set(students.map(student => student.division))];
+
+//         // Process each division
+//         for (const division of divisions) {
+//           // Get all students for this specific department, year, and division
+//           const divisionStudents = students.filter(student => student.division === division);
+          
+//           // Get unique batches for this division
+//           const batches = [...new Set(divisionStudents.map(student => student.batch))];
+
+//           // Check if metadata entry exists
+//           let metadataEntry = await Metadata.findOne({
+//             department: department,
+//             year: year,
+//             division: division
+//           });
+
+//           if (metadataEntry) {
+//             // Update existing entry with new batches
+//             const updatedBatches = [...new Set([...metadataEntry.batches, ...batches])];
+//             metadataEntry.batches = updatedBatches;
+//             await metadataEntry.save();
+//             console.log(`Updated metadata for Department ${department}, Year ${year}, Division ${division}`);
+//           } else {
+//             // Create new entry
+//             const newMetadata = new Metadata({
+//               department: department,
+//               year: year,
+//               division: division,
+//               batches: batches
+//             });
+
+//             await newMetadata.save();
+//             console.log(`Created new metadata for Department ${department}, Year ${year}, Division ${division}`);
+//           }
+//         }
+//       }
+//     }
+
+//     console.log("Metadata upsert completed for all departments, years, and divisions.");
+//     return {
+//       success: true,
+//       message: "Metadata Updated for all departments, years, and divisions"
+//     };
+
+//   } catch (err) {
+//     console.error("Error upserting metadata:", err);
+//     throw err;
+//   }
+// };
+
+
 const upsertMetadata = async (req, res) => {
   try {
-    const { department,year } = req.query;
+    // Fetch all students
+    const allStudents = await Student.find({});
 
-    if (!department) {
+    if (allStudents.length === 0) {
       return res.json({
         success: false,
-        message: "Department Parameter Missing",
+        message: "No student data found.",
       });
     }
 
-    // Fetch all students for the given department
-    const studentsData = await Student.find({ department });
+    // Structure: { "IT-3-1": { department: "IT", year: 3, division: 1, batches: Set(...) } }
+    const metadataMap = {};
 
-    if (studentsData.length == 0) {
-      return res.json({
-        success: false,
-        message: "Students Not Found",
-      });
-    }
+    // Group students by department, year, division
+    allStudents.forEach(student => {
+      const { department, year, division, batch } = student;
+      const key = `${department}-${year}-${division}`;
 
-    // Initialize a map to track divisions and their corresponding batches
-    const divisionBatchMap = {};
-
-    // Iterate over students and collect divisions and batches
-    studentsData.forEach(student => {
-      const { division, batch, year } = student;
-
-      if (!divisionBatchMap[division]) {
-        divisionBatchMap[division] = new Set();  // Initialize a set for batches to avoid duplicates
+      if (!metadataMap[key]) {
+        metadataMap[key] = {
+          department,
+          year,
+          division,
+          batches: new Set(),
+        };
       }
 
-      // Add batch to the division's batch set
-      divisionBatchMap[division].add(batch);
+      metadataMap[key].batches.add(batch);
     });
 
-    // Now we need to create or update metadata entries for each division
-    for (const [division, batchesSet] of Object.entries(divisionBatchMap)) {
-      const batches = Array.from(batchesSet); // Convert the Set of batches to an array
+    // Now upsert each metadata entry
+    const operations = Object.values(metadataMap).map(async ({ department, year, division, batches }) => {
+      const batchesArray = Array.from(batches);
 
-      // Check if metadata entry exists for the department and division
-      let metadataEntry = await Metadata.findOne({
-        department: department,
-        year: year, // Assuming "year 3" is fixed for all students. You can make this dynamic if needed
-        division: division,
-      });
+      const existing = await Metadata.findOne({ department, year, division });
 
-      if (metadataEntry) {
-        // If entry exists, update the batches array
-        const updatedBatches = [...new Set([...metadataEntry.batches, ...batches])]; // Merge batches while removing duplicates
-        metadataEntry.batches = updatedBatches;
-
-        await metadataEntry.save(); // Save the updated metadata
-        console.log(`Updated metadata for Department ${department}, Year 3, Division ${division}`);
+      if (existing) {
+        // Merge with existing batches
+        const mergedBatches = [...new Set([...existing.batches, ...batchesArray])];
+        existing.batches = mergedBatches;
+        await existing.save();
+        console.log(`Updated metadata for ${department}, Year ${year}, Division ${division}`);
       } else {
-        // If no entry exists, create a new metadata entry
-        const newMetadata = new Metadata({
-          department: department,
-          year: year, // Assuming "year 3" for all, can adjust dynamically
-          division: division,
-          batches: batches, // Initialize batches for this division
+        const newEntry = new Metadata({
+          department,
+          year,
+          division,
+          batches: batchesArray,
         });
-
-        await newMetadata.save(); // Save the new metadata entry
-        console.log(`Created new metadata for Department ${department}, Year 3, Division ${division}`);
+        await newEntry.save();
+        console.log(`Created metadata for ${department}, Year ${year}, Division ${division}`);
       }
-    }
-
-    console.log("Metadata upsert completed.");
-    return res.json({
-      success: true,
-      message: "Metadata Updated",
     });
+
+    await Promise.all(operations);
+
+    return true;
+    // return res.json({
+    //   success: true,
+    //   message: "All metadata entries updated successfully.",
+    // });
 
   } catch (err) {
-    console.error("Error upserting metadata:", err);
-    return res.json({
-      success: false,
-      message: err.message,
-    });
+    console.error("Error in full metadata upsert:", err);
+    return false;
+    // return res.json({
+    //   success: false,
+    //   message: err.message,
+    // });
   }
 };
+
 
 const getDivison = async (req, res) => {
   try {
     const { department, year } = req.query;
 
-    // Validate if department and year are provided
     if (!department || !year) {
-      return res.status(400).json({
+      return res.json({
         success: false,
-        message: 'Department and Year parameters are required',
+        message: "Department and Year Parameter Missing",
       });
     }
 
-    // Fetch all metadata entries for the given department and year
     const metadataEntries = await Metadata.find({
       department: department,
       year: year
@@ -105,11 +161,10 @@ const getDivison = async (req, res) => {
     if (metadataEntries.length === 0) {
       return res.json({
         success: false,
-        message: 'No Divisions Found',
+        message: "No Divisions Found",
       });
     }
 
-    // Extract the unique divisions
     const divisions = [...new Set(metadataEntries.map(entry => entry.division))];
 
     return res.status(200).json({
@@ -117,7 +172,7 @@ const getDivison = async (req, res) => {
       divisions: divisions
     });
   } catch (err) {
-    console.error('Error fetching divisions:', err);
+    console.error("Error fetching divisions:", err);
     return res.status(500).json({
       success: false,
       message: err.message,
@@ -128,38 +183,33 @@ const getDivison = async (req, res) => {
 const getBatches = async (req, res) => {
   try {
     const { department, division, year } = req.query;
-  
-    // Validate if department, division, and year are provided
+
     if (!department || !division || !year) {
-      return res.status(400).json({
+      return res.json({
         success: false,
-        message: 'Department, Division, and Year parameters are required',
+        message: "Department, Division, and Year Parameters Missing",
       });
     }
-  
-    // Fetch all metadata entries for the given department, division, and year
-    const metadataEntries = await Metadata.find({
+
+    const metadataEntry = await Metadata.findOne({
       department: department,
       division: division,
       year: year
     });
-  
-    if (metadataEntries.length === 0) {
-      return res.status(404).json({
+
+    if (!metadataEntry) {
+      return res.json({
         success: false,
-        message: 'No batches Found',
+        message: "No Batches Found",
       });
     }
-  
-    // Extract the unique batches
-    const batches = [...new Set(metadataEntries.flatMap(entry => entry.batches))];
-  
+
     return res.status(200).json({
       success: true,
-      batches: batches
+      batches: metadataEntry.batches
     });
   } catch (err) {
-    console.error('Error fetching batches:', err);
+    console.error("Error fetching batches:", err);
     return res.status(500).json({
       success: false,
       message: err.message,
@@ -167,4 +217,4 @@ const getBatches = async (req, res) => {
   }
 };
 
-module.exports = { upsertMetadata ,getDivison,getBatches};
+module.exports = { upsertMetadata, getDivison, getBatches };

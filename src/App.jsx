@@ -12,7 +12,7 @@ import Dashboard from './pages/Dashboard/Dashboard';
 import Students from './pages/Students/Students';
 import History from './pages/History/History';
 import AddStudents from './pages/AddStudents/AddStudents';
-
+import ComingSoon from './pages/ComingSoon/ComingSoon';
 function App() {
 
 
@@ -31,6 +31,7 @@ function App() {
           <Route path="/admin/students" element={<Students />} />
           <Route path="/admin/history" element={<History />} />
           <Route path="/admin/addstudents" element={<AddStudents />} />
+          <Route path="/admin/directmessage" element={<ComingSoon />} />
         </Route>
       </Routes>
       

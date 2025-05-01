@@ -25,6 +25,13 @@ const DesktopSidebar = () => {
             <span>Students</span>
           </Link>
           <Link 
+            to="/admin/directmessage" 
+            className={`${s.navLink} ${location.pathname === '/admin/directmessage' ? s.active : ''}`}
+          >
+            <IoTimeOutline className={s.navIcon} />
+            <span>Direct Message</span>
+          </Link>
+          <Link 
             to="/admin/addstudents" 
             className={`${s.navLink} ${location.pathname === '/admin/addstudents' ? s.active : ''}`}
           >
