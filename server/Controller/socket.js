@@ -3,6 +3,7 @@ const {initializeClient} = require('./whatsapp')
 const cookie = require('cookie');
 const { cleanupClient } = require('../Utils/cleanupClient')
 const Student = require("../Modal/Student");
+const History = require("../Modal/History")
 const userSockets = {};
 const clients = {};
 // Socket.IO Connection
@@ -218,7 +219,6 @@ const tempSend = async (req, res) => {
   }
 };
 
-
 const sendMessages = async (req, res) => {
   const userId = req.user.id;
   const { selectedIds, message } = req.body;
@@ -268,12 +268,24 @@ const sendMessages = async (req, res) => {
     // Map through the contacts array and send messages
     const sendMessagePromises = validContacts.map((data) => {
       return clients[userId].client.sendMessage(data.contactNo + '@c.us', message);
-    
     });
 
     // Wait for all messages to be sent
     const responses = await Promise.all(sendMessagePromises);
-    console.log(responses)
+
+    const messagesToInsert = responses.map(message => {
+      return {
+        sender: message.from,            // Sender's phone number
+        receiver: message.to,            // Receiver's phone number
+        message: message.body,           // Message body
+        timestamp: message.timestamp, // Convert timestamp to Date object
+        status: 'success', // Determine success/failure based on ack
+        senderId: req.user.id  // Default senderId to `from` if not provided
+      };
+    });
+
+    // Insert the messages in a single write operation (bulk insert)
+    await History.insertMany(messagesToInsert);
     // Send success response
     res.json({ success: true, message: "Messages sent"});
   } catch (error) {
@@ -288,7 +300,6 @@ const sendMessages = async (req, res) => {
       });
   }
 };
-
 
 const arraySend = async (req, res) => {
   try {
@@ -333,5 +344,63 @@ const arraySend = async (req, res) => {
   }
 };
 
+const directMessageSend = async (req,res,processingStatus) => {
+  try {
+    const { fileId, message } = req.body;
 
-module.exports = {setUpSocket,checkStatus,sendSingle,sendAll,logout,tempSend,sendMessages,arraySend};
+    if (!fileId || !message) {
+      return res.status(400).json({ error: 'File ID and message are required' });
+    }
+
+    const status = processingStatus[fileId];
+    if (!status || status.status !== 'completed') {
+      return res.status(400).json({ error: 'File not processed or processing failed' });
+    }
+    if (!clients[req.user.id]) {
+      return res.json({ success: false, message: 'Whatsapp not Connected' });
+    }
+
+    const contacts = status.contacts;
+    let successCount = 0;
+    let failedCount = 0;
+
+    const sendMessagePromises = contacts.map(data => {
+      return clients[req.user.id].client.sendMessage('91'+data + '@c.us',message);
+    });
+
+    // Wait for all messages to be sent
+    const responses = await Promise.all(sendMessagePromises);
+
+    const messagesToInsert = responses.map(message => {
+      return {
+        sender: message.from,            // Sender's phone number
+        receiver: message.to,            // Receiver's phone number
+        message: message.body,           // Message body
+        timestamp: message.timestamp, // Convert timestamp to Date object
+        status: 'success', // Determine success/failure based on ack
+        senderId: req.user.id  // Default senderId to `from` if not provided
+      };
+    });
+
+    // Insert the messages in a single write operation (bulk insert)
+    await History.insertMany(messagesToInsert);
+
+  
+
+    
+    // Clean up processing status
+    delete processingStatus[fileId];
+
+    res.json({
+      success: true,
+      total: contacts.length,
+      success:messagesToInsert.length ,
+      failed: contacts.length - messagesToInsert.length, 
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: error.message });
+  }
+}
+
+module.exports = {setUpSocket,checkStatus,sendSingle,sendAll,logout,tempSend,sendMessages,arraySend,directMessageSend};

@@ -7,6 +7,8 @@ const cookieParser = require("cookie-parser");
 const path = require('path');
 const fs = require('fs');
 const uploadRoutes = require('./routes/uploadRoutes');
+const directMessageRoutes = require('./routes/directMessageRoutes');
+const historyRoutes = require('./routes/historyRoutes');
 
 const dbConnect = require("./Config/Connect");
 const {setUpSocket} = require('./Controller/socket')
@@ -66,6 +68,8 @@ app.use("/api/v1/wp", whtsappRoutes);
 app.use("/api/v1/students", studentRoutes);
 app.use("/api/v1/metadata", metatDataRoutes);
 app.use('/api/v1/upload', uploadRoutes);
+app.use('/api/v1/direct-message', directMessageRoutes);
+app.use('/api/v1/history', historyRoutes);
 
 app.get("/", (req, res) => {
   req.header("Access-Control-Allow-Origin", "http://localhost:5173");

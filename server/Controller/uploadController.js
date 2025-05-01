@@ -28,7 +28,7 @@ const upload = multer({
     if (mimetype && extname) {
       return cb(null, true);
     }
-    cb(new Error('Only Excel (.xlsx, .xls) and CSV files are allowed!'));
+    cb(new Error('Only Excel (.xlsx, .xls) and CSV files are allowed!' + file.mimetype));
   }
 }).single('file');
 
@@ -146,8 +146,8 @@ async function processFile(filePath, fileId) {
           batch: row['Batch'] || '1',
           counsellor: parseInt(row['Counsellor']) || 1,
           department: row['Department'] || 'IT',
-          personalNumber: row['Mobile No'] || null,
-          homeNumber: row['Home Phone No'] || null,
+          personalNumber: extractFirstNumber(row['Mobile No']) || null,
+          homeNumber: extractFirstNumber(row['Home Phone No']) || null,
           year: parseInt(row['Year']) || 1
         };
 
@@ -181,12 +181,43 @@ async function processFile(filePath, fileId) {
       console.error('Error updating metadata:', error);
     }
 
+    // Delete the uploaded file after successful processing
+    try {
+      fs.unlinkSync(filePath);
+      console.log(`Successfully deleted file: ${filePath}`);
+    } catch (error) {
+      console.error(`Error deleting file ${filePath}:`, error);
+    }
+
     processingStatus[fileId].status = 'completed';
     processingStatus[fileId].totalRecords = processedCount;
   } catch (error) {
     processingStatus[fileId].status = 'failed';
     processingStatus[fileId].error = error.message;
+    
+    // Try to delete the file even if processing failed
+    try {
+      fs.unlinkSync(filePath);
+      console.log(`Deleted file after processing failure: ${filePath}`);
+    } catch (deleteError) {
+      console.error(`Error deleting file after processing failure ${filePath}:`, deleteError);
+    }
   }
+}
+
+function extractFirstNumber(phoneString) {
+  if (
+    !phoneString ||
+    phoneString.toLowerCase() === "no" ||
+    phoneString.toLowerCase() === "nan" ||
+    phoneString.toLowerCase() === "-" ||
+    phoneString.toLowerCase() === "n/a" ||
+    phoneString.toLowerCase() === "null"
+  ) {
+    return null;
+  }
+  const numbers = phoneString.split(/,|\s+/).filter((num) => num.trim() !== "");
+  return numbers.length > 0 ? numbers[0] : null;
 }
 
 module.exports = {
