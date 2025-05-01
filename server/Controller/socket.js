@@ -290,5 +290,48 @@ const sendMessages = async (req, res) => {
 };
 
 
+const arraySend = async (req, res) => {
+  try {
+    // MongoDB query to fetch all documents
+    const mobileNumbers = [918347296122,918460752501,919265256348,919638766520,919925121637,919978288188,919227014988,919825136492,919825424035,919825151261];
+    var msgString = "Dear Parent,\n" +
+	"\n" +
+	"This is to inform you that your son/daughter was absent for the Class Test (CIE) conducted on 18th April 2025 for the subject Programming with C++.\n" +
+	"\n" +
+	"We kindly request you to speak with your ward regarding this absence. If you require any further clarification, please feel free to contact Dr. Parth Goel at the Sophos Lab (Room No. 316), 2nd Floor, DEPSTAR Building, CHARUSAT.\n" +
+	"\n" +
+	"Name : Dr. Parth Goel\n" +
+	"Email : parthgoel.ce@charusat.ac.in\n" +
+	"\n" +
+	"Thank you for your attention to this matter.\n" +
+	"\n" +
+	"Warm regards,\n" +
+	"Department of Computer Science and Engineering\n" +
+	"DEPSTAR – CHARUSAT\n" +
+	"\n" +
+	"Note : This message was sent by the underdevelopment system do not reply to this message contact to given person above.";
 
-module.exports = {setUpSocket,checkStatus,sendSingle,sendAll,logout,tempSend,sendMessages};
+      if (!clients[req.user._id]) {
+        return res.json({success:false, message: 'User not Connected' });
+      }
+
+      const sendMessagePromises = mobileNumbers.map(data => {
+        return clients[req.user.id].client.sendMessage(data + '@c.us',msgString);
+      });
+  
+      // Wait for all messages to be sent
+      const responses = await Promise.all(sendMessagePromises);
+    
+      
+      res.json({ success: true, message: 'Messages sent', responses });
+
+  } catch (error) {
+    console.log(error)
+    res
+      .status(500)
+      .json({ success: false, message: "Failed to send messages12", error });
+  }
+};
+
+
+module.exports = {setUpSocket,checkStatus,sendSingle,sendAll,logout,tempSend,sendMessages,arraySend};
