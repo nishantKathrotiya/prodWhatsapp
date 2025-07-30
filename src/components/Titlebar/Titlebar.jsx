@@ -9,6 +9,7 @@ const Titlebar = ({handleToggleClick, setIsModalOpen }) => {
     const {status} = useSelector((state)=>state.profile)
     const dispatch = useDispatch()
     const disconnectHandler = ()=>{
+        console.log("Disconnecting")
         dispatch(disconnectWhtsapp());
     }
     return (

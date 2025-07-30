@@ -5,6 +5,8 @@ const otpModel = require("../Modal/OTP");
 const userModel = require("../Modal/User");
 const mailSender = require("../Transporter/MailSender");
 const otpTemplate = require("../EmailTemplate/verificationOTP");
+const passwordResetTemplate = require("../EmailTemplate/passwordResetEmail");
+const crypto = require("crypto");
 require("dotenv").config();
 
 //signUp
@@ -218,4 +220,133 @@ const updateUser = async (req,res) => {
 // Controller for Changing Password
 const changePassword = async (req, res) => {};
 
-module.exports = { signUp, login, sendOTP, changePassword,updateUser };
+// Send Password Reset Link
+const sendPasswordResetLink = async (req, res) => {
+  try {
+    const { employeeId, email } = req.body;
+
+    // Validate input
+    if (!employeeId || !email) {
+      return res.json({
+        success: false,
+        message: "Employee ID and Email are required",
+      });
+    }
+
+    // Check if user exists
+    const user = await userModel.findOne({ employeeId, email });
+    if (!user) {
+      return res.json({
+        success: false,
+        message: "No user found with provided Employee ID and Email",
+      });
+    }
+
+    // Generate reset token
+    const resetToken = crypto.randomBytes(32).toString("hex");
+    const resetTokenExpiry = new Date(Date.now() + 15 * 60 * 1000); // 15 minutes
+
+    // Save token to user document
+    await userModel.findByIdAndUpdate(user._id, {
+      resetPasswordToken: resetToken,
+      resetPasswordExpires: resetTokenExpiry,
+    });
+
+    // Create reset link
+    const resetLink = `${process.env.FRONTEND_URL || 'http://localhost:5173'}/auth/reset-password/${resetToken}`;
+
+    // Send email
+    await mailSender(
+      email,
+      "Password Reset Request - DEPSTAR",
+      passwordResetTemplate(resetLink, employeeId)
+    );
+
+    res.json({
+      success: true,
+      message: "Password reset link sent to your email",
+    });
+  } catch (error) {
+    console.error("Password reset link error:", error);
+    res.json({
+      success: false,
+      message: "Failed to send password reset link. Please try again.",
+    });
+  }
+};
+
+// Reset Password with Token
+const resetPassword = async (req, res) => {
+  try {
+    const { token } = req.params;
+    const { password, confirmPassword } = req.body;
+
+    // Validate input
+    if (!token || !password || !confirmPassword) {
+      return res.json({
+        success: false,
+        message: "Token, password, and confirm password are required",
+      });
+    }
+
+    // Check if passwords match
+    if (password !== confirmPassword) {
+      return res.json({
+        success: false,
+        message: "Password and confirm password do not match",
+      });
+    }
+
+    // Validate password strength (minimum 6 characters)
+    if (password.length < 6) {
+      return res.json({
+        success: false,
+        message: "Password must be at least 6 characters long",
+      });
+    }
+
+    // Find user with valid token
+    const user = await userModel.findOne({
+      resetPasswordToken: token,
+      resetPasswordExpires: { $gt: Date.now() },
+    });
+
+    if (!user) {
+      return res.json({
+        success: false,
+        message: "Invalid or expired reset token",
+      });
+    }
+
+    // Hash new password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Update user password and clear reset token
+    await userModel.findByIdAndUpdate(user._id, {
+      password: hashedPassword,
+      resetPasswordToken: null,
+      resetPasswordExpires: null,
+    });
+
+    res.json({
+      success: true,
+      message: "Password reset successfully",
+    });
+  } catch (error) {
+    console.error("Password reset error:", error);
+    res.json({
+      success: false,
+      message: "Failed to reset password. Please try again.",
+    });
+  }
+};
+
+module.exports = { 
+  signUp, 
+  login, 
+  sendOTP, 
+  changePassword, 
+  updateUser, 
+  sendPasswordResetLink, 
+  resetPassword 
+};

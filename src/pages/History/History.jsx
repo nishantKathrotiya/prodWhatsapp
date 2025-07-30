@@ -17,7 +17,7 @@ const History = () => {
         try {
             const response = await getMessageHistory(page);
             setMessages(response.data);
-            setTotalPages(response.totalPages);
+            setTotalPages(response.pagination.totalPages);
         } catch (error) {
             toast.error("Failed to fetch message history");
         } finally {

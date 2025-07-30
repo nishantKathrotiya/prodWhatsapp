@@ -91,4 +91,32 @@ export function logout(navigate) {
   }
 }
 
+export async function resetPassword(token, password, confirmPassword) {
+  try {
+    const response = await apiConnector("POST", `http://localhost:4000/api/v1/auth/reset-password/${token}`, {
+      password,
+      confirmPassword
+    });
+    
+    return response.data;
+  } catch (error) {
+    console.log("RESET PASSWORD API ERROR............", error);
+    throw error;
+  }
+}
+
+export async function sendPasswordResetLink(employeeId, email) {
+  try {
+    const response = await apiConnector("POST", "http://localhost:4000/api/v1/auth/send-reset-link", {
+      employeeId,
+      email
+    });
+    
+    return response.data;
+  } catch (error) {
+    console.log("SEND RESET LINK API ERROR............", error);
+    throw error;
+  }
+}
+
   

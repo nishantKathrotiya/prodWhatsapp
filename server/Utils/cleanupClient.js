@@ -1,5 +1,5 @@
 
-function cleanupClient(userId,clients){
+function cleanupClient(userId, clients) {
     if (clients[userId]) {
         console.log(`Cleaning up client for ${userId}`);
         
@@ -8,15 +8,28 @@ function cleanupClient(userId,clients){
         
         try {
             if (clients[userId].client) {
-                clients[userId].client.destroy();
-                console.log('Client destroyed')
+                // Add a small delay before destroying to allow any pending operations to complete
+                setTimeout(async () => {
+                    try {
+                        await clients[userId].client.destroy();
+                        console.log(`Client destroyed for ${userId}`);
+                    } catch (destroyError) {
+                        console.error(`Error destroying client for ${userId}:`, destroyError.message);
+                    }
+                }, 1000); // 1 second delay
             }
         } catch (err) {
-            console.error(`Error destroying client for ${userId}:`, err);
+            console.error(`Error during cleanup for ${userId}:`, err.message);
         }
         
-        delete clients[userId];
+        // Remove from clients object after a delay to ensure cleanup is complete
+        setTimeout(() => {
+            if (clients[userId]) {
+                delete clients[userId];
+                console.log(`Client removed from memory for ${userId}`);
+            }
+        }, 2000); // 2 second delay
     }
-};
+}
 
 module.exports = {cleanupClient}

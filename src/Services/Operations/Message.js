@@ -49,7 +49,7 @@ export async function sendMessages(selectedIds, message, setLoading, setActiveSt
   setLoading(false);
 }
 
-export async function disconnectWhtsapp() {
+export function disconnectWhtsapp() {
   return async (dispatch) => {
     const toastId = toast.loading("Loading...");
     try {

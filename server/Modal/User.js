@@ -29,6 +29,14 @@ const userLoginSchema = mongoose.Schema({
     joinedAt: {
         type: Date,
         default: Date.now
+    },
+    resetPasswordToken: {
+        type: String,
+        default: null
+    },
+    resetPasswordExpires: {
+        type: Date,
+        default: null
     }
 });
 

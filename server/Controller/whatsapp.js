@@ -7,17 +7,22 @@ class CustomLocalAuth extends LocalAuth {
     async logout() {
         try {
             await this.client.destroy();
-            fs.rm(this.userDataDir, { recursive: true, force: true }, (err) => {
-                if (err) {
-                    throw new Error(err);
-                } else {
-                    console.log('Session deleted!');
-                    console.log('Disconnected!');
+            
+            // Use a more robust file deletion approach
+            if (this.userDataDir && fs.existsSync(this.userDataDir)) {
+                try {
+                    // Use synchronous deletion with better error handling
+                    fs.rmSync(this.userDataDir, { recursive: true, force: true });
+                    console.log('Session deleted successfully!');
+                } catch (deleteError) {
+                    console.warn('Could not delete session directory:', deleteError.message);
+                    // Don't throw the error, just log it as a warning
                 }
-            });
+            }
+            console.log('Disconnected!');
         } catch (error) {
             console.error('Error during logout:', error);
-            throw error;
+            // Don't throw the error to prevent server crash
         }
     }
 }
