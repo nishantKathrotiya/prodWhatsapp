@@ -9,6 +9,17 @@ const passwordResetTemplate = require("../EmailTemplate/passwordResetEmail");
 const crypto = require("crypto");
 require("dotenv").config();
 
+
+// Verify Email OF Charusat
+function isCharusatEmail(email) {
+  const pattern = /^[a-zA-Z0-9._%+-]+@charusat\.ac\.in$/;
+  return pattern.test(email);
+}
+
+
+
+
+
 //signUp
 const signUp = async (req, res) => {
   const {
@@ -36,6 +47,15 @@ const signUp = async (req, res) => {
     return res.json({
       success: false,
       msg: "Fill All the Fields",
+      body:req.body
+    });
+  }
+
+
+  if(!isCharusatEmail(email)){
+     return res.json({
+      success: false,
+      msg: "Not a valid charusta email id",
       body:req.body
     });
   }
@@ -92,6 +112,14 @@ const login = async (req, res) => {
       });
     }
 
+    if(!isCharusatEmail(email)){
+     return res.json({
+      success: false,
+      msg: "Not a valid charusta email id",
+      body:req.body
+    });
+  }
+
     const user = await userModel.findOne({ employeeId }); //user check exist or not
     if (!user) {
       return res.json({
@@ -145,6 +173,15 @@ const login = async (req, res) => {
 //sendOTP
 const sendOTP = async (req, res) => {
   try {
+
+    if(!isCharusatEmail(req?.body?.email)){
+     return res.json({
+      success: false,
+      msg: "Not a valid charusta email id",
+      body:req.body
+    });
+  }
+
     let genratedOtp = otpGenerator.generate(4, {
       upperCaseAlphabets: false,
       specialChars: false,
@@ -232,6 +269,14 @@ const sendPasswordResetLink = async (req, res) => {
         message: "Employee ID and Email are required",
       });
     }
+
+    if(!isCharusatEmail(email)){
+     return res.json({
+      success: false,
+      msg: "Not a valid charusta email id",
+      body:req.body
+    });
+  }
 
     // Check if user exists
     const user = await userModel.findOne({ employeeId, email });
@@ -350,3 +395,4 @@ module.exports = {
   sendPasswordResetLink, 
   resetPassword 
 };
+
