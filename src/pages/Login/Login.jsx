@@ -34,11 +34,11 @@ const Login = () => {
   };
 
   const validateForm = () => {
-    const { employeeId, password } = formData;
+    const { email, password } = formData;
     const newErrors = {};
 
     // Check if all fields are filled
-    if (!employeeId || !password) {
+    if (!email || !password) {
       newErrors.required = 'Please fill all the fields.';
     }
 
@@ -53,19 +53,19 @@ const Login = () => {
 
     // Create the data object for login
     const data = {
-      employeeId: formData.employeeId,
+      email: formData.email,
       password: formData.password,
     };
 
 
     // API call placeholder
-    dispatch(login(data.employeeId, data.password, navigate))
+    dispatch(login(data.email, data.password, navigate))
 
   };
 
   const isFormValid = () => {
-    const { employeeId, password } = formData;
-    return employeeId && password && Object.keys(errors).length === 0;
+    const { email, password } = formData;
+    return email && password && Object.keys(errors).length === 0;
   };
 
   return (
@@ -82,13 +82,13 @@ const Login = () => {
 
           <form className={s.formConatainer} onSubmit={handleSubmit}>
             <div className={s.fieldConatiner}>
-              <label htmlFor="employeeId">Employee ID*</label>
+              <label htmlFor="employeeId">Email*</label>
               <input
                 type="text"
-                id="employeeId"
-                name="employeeId"
-                placeholder="Enter Your Employee ID"
-                value={formData.employeeId}
+                id="email"
+                name="email"
+                placeholder="Enter Your Email"
+                value={formData.email}
                 onChange={handleInputChange}
               />
             </div>

@@ -5,10 +5,10 @@ import { RiMenu2Fill } from "react-icons/ri";
 import { disconnectWhtsapp } from '../../Services/Operations/Message';
 import { useDispatch, useSelector } from 'react-redux';
 
-const Titlebar = ({handleToggleClick, setIsModalOpen }) => {
-    const {status} = useSelector((state)=>state.profile)
+const Titlebar = ({ handleToggleClick, setIsModalOpen }) => {
+    const { status } = useSelector((state) => state.profile)
     const dispatch = useDispatch()
-    const disconnectHandler = ()=>{
+    const disconnectHandler = () => {
         console.log("Disconnecting")
         dispatch(disconnectWhtsapp());
     }
@@ -22,15 +22,15 @@ const Titlebar = ({handleToggleClick, setIsModalOpen }) => {
 
             <div className={s.titleBarRightConatiner}>
                 {status === "READY" ? (
-                    <button className={`${s.connectButton} ${s.connected}`} onClick={disconnectHandler}>
+                    <btn className={`${s.connectButton} ${s.connected}`} onClick={disconnectHandler}>
                         <FaWhatsapp className={s.whatsappIcon} />
                         <span>Disconnect</span>
-                    </button>
+                    </btn>
                 ) : (
-                    <button className={`${s.connectButton} ${s.disconnected}`} onClick={() => setIsModalOpen(true)}>
+                    <btn className={`${s.connectButton} ${s.disconnected}`} onClick={() => setIsModalOpen(true)}>
                         <FaWhatsapp className={s.whatsappIcon} />
                         <span>Connect</span>
-                    </button>
+                    </btn>
                 )}
             </div>
         </div>

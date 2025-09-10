@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Dataview from '../Dataview/Dataview';
 import { MdFilterAltOff } from "react-icons/md";
-import { IoSearch, IoSend, IoCheckmarkCircleOutline } from "react-icons/io5";
+import { IoSearch, IoSend, IoCheckmarkCircleOutline, IoClose } from "react-icons/io5";
 import './Datatable.css';
 import { toast } from 'react-hot-toast';
 import { useSelector } from 'react-redux';
@@ -10,7 +10,7 @@ const Datatable = ({ data, selectedIds, handleSelect, setModal }) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [filteredData, setFilteredData] = useState(data);
     const [selectAll, setSelectAll] = useState(false);
-   
+
     const { status } = useSelector((state) => state.profile)
 
     useEffect(() => {
@@ -77,12 +77,12 @@ const Datatable = ({ data, selectedIds, handleSelect, setModal }) => {
                             placeholder='Search by name or ID'
                             onChange={(e) => handleSearchChange(e)}
                         />
+                        <IoClose className='clearIcon' onClick={clearFilters} title="Clear filters" />
                     </div>
-                    <MdFilterAltOff className='iconFix' onClick={clearFilters} title="Clear filters" />
-                    <button onClick={getSelectedIds} className='btm' disabled={selectedIds.length === 0}>
-                        <IoSend />
-                        <span>Send ({selectedIds.length})</span>
-                    </button>
+                    <btn onClick={getSelectedIds} className={(selectedIds?.length ?? 0) === 0 ? 'btm disabled' : 'btm'} disabled={selectedIds.length === 0}>
+                        <IoSend className='planeIcon' />
+                        <span> ({selectedIds?.length ?? 0})</span>
+                    </btn>
                 </div>
             </div>
             <div className='dataTableOverflow'>

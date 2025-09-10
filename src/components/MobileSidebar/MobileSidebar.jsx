@@ -10,7 +10,7 @@ const MobileSidebar = ({ setIsMobileSidebarOpen }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.profile);
-  
+
   const handleLogout = () => {
     dispatch(logout(navigate));
   };
@@ -19,46 +19,46 @@ const MobileSidebar = ({ setIsMobileSidebarOpen }) => {
     <div className={s.mobileSidebarContainer}>
       <div className={s.mobileHeader}>
         <h1>CareLink</h1>
-        <button className={s.closeButton} onClick={() => setIsMobileSidebarOpen(false)}>
+        <btn className={s.closeButton} onClick={() => setIsMobileSidebarOpen(false)}>
           <IoClose className={s.closeIcon} />
-        </button>
+        </btn>
       </div>
-      
+
       <nav className={s.navMenu}>
-        <Link 
-          to="/admin" 
+        <Link
+          to="/admin"
           className={`${s.navLink} ${location.pathname === '/admin' ? s.active : ''}`}
           onClick={() => setIsMobileSidebarOpen(false)}
         >
           <IoHomeOutline className={s.navIcon} />
           <span>Home</span>
         </Link>
-        <Link 
-          to="/admin/students" 
+        <Link
+          to="/admin/students"
           className={`${s.navLink} ${location.pathname === '/admin/students' ? s.active : ''}`}
           onClick={() => setIsMobileSidebarOpen(false)}
         >
           <IoSchoolOutline className={s.navIcon} />
           <span>Students</span>
         </Link>
-        <Link 
-          to="/admin/directmessage" 
+        <Link
+          to="/admin/directmessage"
           className={`${s.navLink} ${location.pathname === '/admin/directmessage' ? s.active : ''}`}
           onClick={() => setIsMobileSidebarOpen(false)}
         >
           <IoTimeOutline className={s.navIcon} />
           <span>Direct Message</span>
         </Link>
-        <Link 
-          to="/admin/addstudents" 
+        <Link
+          to="/admin/addstudents"
           className={`${s.navLink} ${location.pathname === '/admin/addstudents' ? s.active : ''}`}
           onClick={() => setIsMobileSidebarOpen(false)}
         >
           <IoPersonAddOutline className={s.navIcon} />
           <span>Add Students</span>
         </Link>
-        <Link 
-          to="/admin/history" 
+        <Link
+          to="/admin/history"
           className={`${s.navLink} ${location.pathname === '/admin/history' ? s.active : ''}`}
           onClick={() => setIsMobileSidebarOpen(false)}
         >

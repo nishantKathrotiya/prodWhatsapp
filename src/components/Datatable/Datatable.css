@@ -121,7 +121,8 @@
     position: relative;
     display: flex;
     align-items: center;
-    width: 280px;
+    width: max-content;
+
 }
 
 .searchIcon {
@@ -131,8 +132,16 @@
     color: #6b7280;
 }
 
+.clearIcon {
+    position: absolute;
+    right: 10px;
+    font-size: 18px;
+    color: #6b7280;
+    cursor: pointer;
+}
+
 .searchInputWrapper input {
-    padding-left: 35px; /* Space for the icon */
+    padding-left: 35px;
     width: 100%;
 }
 
@@ -191,13 +200,18 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.planeIcon {
+    transform: rotate(-45deg);
+    padding: 0;
+}
+
 .btm:hover {
     background: linear-gradient(135deg, #2563eb, #1d4ed8);
     transform: translateY(-2px);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.btm:disabled {
+.disabled {
     background: linear-gradient(135deg, #9ca3af, #6b7280);
     cursor: not-allowed;
     transform: none;
@@ -231,7 +245,7 @@
     .searchDiv input {
         min-width: unset;
         padding: 8px 12px;
-        font-size: 13px;
+        s font-size: 13px;
     }
 
     .iconFix {
@@ -276,10 +290,23 @@
     .searchInputWrapper {
         width: 100%;
     }
-    
+
     .tableFooter {
         flex-direction: column;
         gap: 10px;
         padding: 10px;
     }
+
+    .searchInputWrapper input {
+        width: 100%;
+        padding-left: 20%;
+        font-size: xx-small;
+    }
+
+    .btm {
+        font-size: xx-small;
+        display: flex;
+        align-items: center;
+    }
+
 }

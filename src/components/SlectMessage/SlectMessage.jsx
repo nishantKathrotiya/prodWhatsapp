@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import s from './SlectMessage.module.css';
-import { IoIosInformationCircleOutline } from "react-icons/io";
 
 const SlectMessage = ({ onMessageChange }) => {
     const [selectedMessage, setSelectedMessage] = useState('');
@@ -46,6 +45,8 @@ const SlectMessage = ({ onMessageChange }) => {
             const template = messageTemplates.find(t => t.id === value);
             if (template) {
                 setSelectedMessage(template.message);
+                setCustomMessage(template.message)
+
                 onMessageChange(template.message, template.title);
             }
         }
@@ -65,7 +66,7 @@ const SlectMessage = ({ onMessageChange }) => {
 
             <div className={s.messageContainer}>
                 <div className={s.selectContainer}>
-                    <select 
+                    <select
                         value={isCustom ? 'custom' : messageTemplates.find(t => t.message === selectedMessage)?.id || ''}
                         onChange={handleMessageChange}
                         className={s.messageSelect}
@@ -87,22 +88,30 @@ const SlectMessage = ({ onMessageChange }) => {
                             className={s.customMessageInput}
                         />
                     ) : (
-                        <div className={s.messagePreview}>
-                            {selectedMessage ? (
-                                <>
-                                    <h4>Message Preview:</h4>
-                                    <p>{selectedMessage}</p>
-                                </>
-                            ) : (
-                                <div className={s.emptyPreview}>
-                                    <p>Select a message template to preview</p>
-                                </div>
-                            )}
-                        </div>
+
+                        <>
+                            {
+                                selectedMessage ? (
+
+                                    <textarea
+                                        value={customMessage}
+                                        onChange={handleCustomMessageChange}
+                                        placeholder="Type your custom message here..."
+                                        className={s.customMessageInput}
+                                    />
+
+                                ) : (
+                                    <div className={s.messagePreview} >
+                                        <div className={s.emptyPreview}>
+                                            <p>Select a message template to preview</p>
+                                        </div>
+                                    </div>
+                                )}
+                        </>
                     )}
                 </div>
-            </div>
-        </div>
+            </div >
+        </div >
     );
 };
 
