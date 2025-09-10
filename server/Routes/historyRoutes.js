@@ -1,8 +1,12 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const { getMessageHistory, getMessageHistoryById } = require('../Controller/historyController');
+const {
+  getMessageHistory,
+  getMessageHistoryById,
+} = require("../Controller/historyController");
+const { isLoggedin } = require("../Middleware/authMiddleware");
 
-router.get('/', getMessageHistory);
-router.get('/:id', getMessageHistoryById);
+router.get("/", isLoggedin, getMessageHistory);
+router.get("/:id", isLoggedin, getMessageHistoryById);
 
-module.exports = router; 
+module.exports = router;

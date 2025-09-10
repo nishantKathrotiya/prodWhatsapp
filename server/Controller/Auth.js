@@ -9,16 +9,11 @@ const passwordResetTemplate = require("../EmailTemplate/passwordResetEmail");
 const crypto = require("crypto");
 require("dotenv").config();
 
-
 // Verify Email OF Charusat
 function isCharusatEmail(email) {
   const pattern = /^[a-zA-Z0-9._%+-]+@charusat\.ac\.in$/;
   return pattern.test(email);
 }
-
-
-
-
 
 //signUp
 const signUp = async (req, res) => {
@@ -40,23 +35,21 @@ const signUp = async (req, res) => {
     !email ||
     !password ||
     !confirmPassword ||
-    !otp||
+    !otp ||
     !employeeId
   ) {
-    
     return res.json({
       success: false,
       msg: "Fill All the Fields",
-      body:req.body
+      body: req.body,
     });
   }
 
-
-  if(!isCharusatEmail(email)){
-     return res.json({
+  if (!isCharusatEmail(email)) {
+    return res.json({
       success: false,
       msg: "Not a valid charusta email id",
-      body:req.body
+      body: req.body,
     });
   }
 
@@ -78,8 +71,8 @@ const signUp = async (req, res) => {
     return res.json({
       success: false,
       msg: "OTP Does not match",
-      db:findOtp[0].otp,
-      otp
+      db: findOtp[0].otp,
+      otp,
     });
   }
   const hasedPassword = await bcrypt.hash(password, 10);
@@ -102,9 +95,9 @@ const signUp = async (req, res) => {
 //Login
 const login = async (req, res) => {
   try {
-    const { employeeId, password } = req.body; //get data from req body
+    const { email, password } = req.body; //get data from req body
 
-    if (!employeeId || !password) {
+    if (!email || !password) {
       // validate krlo means all inbox are filled or not;
       return res.json({
         success: false,
@@ -112,15 +105,15 @@ const login = async (req, res) => {
       });
     }
 
-    if(!isCharusatEmail(email)){
-     return res.json({
-      success: false,
-      msg: "Not a valid charusta email id",
-      body:req.body
-    });
-  }
+    if (!isCharusatEmail(email)) {
+      return res.json({
+        success: false,
+        msg: "Not a valid charusta email id",
+        body: req.body,
+      });
+    }
 
-    const user = await userModel.findOne({ employeeId }); //user check exist or not
+    const user = await userModel.findOne({ email }); //user check exist or not
     if (!user) {
       return res.json({
         success: false,
@@ -133,7 +126,7 @@ const login = async (req, res) => {
       const payload = {
         // generate payload;
         email: user.email,
-        employeeId:user.employeeId,
+        employeeId: user.employeeId,
         id: user._id,
         accountType: user.role,
       };
@@ -173,14 +166,13 @@ const login = async (req, res) => {
 //sendOTP
 const sendOTP = async (req, res) => {
   try {
-
-    if(!isCharusatEmail(req?.body?.email)){
-     return res.json({
-      success: false,
-      msg: "Not a valid charusta email id",
-      body:req.body
-    });
-  }
+    if (!isCharusatEmail(req?.body?.email)) {
+      return res.json({
+        success: false,
+        msg: "Not a valid charusta email id",
+        body: req.body,
+      });
+    }
 
     let genratedOtp = otpGenerator.generate(4, {
       upperCaseAlphabets: false,
@@ -220,32 +212,34 @@ const sendOTP = async (req, res) => {
   }
 };
 
-const updateUser = async (req,res) => {
+const updateUser = async (req, res) => {
   try {
     const { firstName, lastName } = req.body.userDetails;
 
     if (!firstName || !lastName) {
-    
       return res.json({
         success: false,
         message: "Please Fill up All the Required Fields",
       });
     }
 
-    const user = await userModel.findByIdAndUpdate(req.user._id,{
-      $set:{
-        firstName:firstName,
-        lastName:lastName
-      }
-    },{new:true} ); 
+    const user = await userModel.findByIdAndUpdate(
+      req.user._id,
+      {
+        $set: {
+          firstName: firstName,
+          lastName: lastName,
+        },
+      },
+      { new: true }
+    );
 
-      user.password = undefined;
+    user.password = undefined;
 
-      return res.status(200).json({
-        success: true,
-        user,
-      });
-    
+    return res.status(200).json({
+      success: true,
+      user,
+    });
   } catch (err) {
     res.json({
       success: false,
@@ -270,13 +264,13 @@ const sendPasswordResetLink = async (req, res) => {
       });
     }
 
-    if(!isCharusatEmail(email)){
-     return res.json({
-      success: false,
-      msg: "Not a valid charusta email id",
-      body:req.body
-    });
-  }
+    if (!isCharusatEmail(email)) {
+      return res.json({
+        success: false,
+        msg: "Not a valid charusta email id",
+        body: req.body,
+      });
+    }
 
     // Check if user exists
     const user = await userModel.findOne({ employeeId, email });
@@ -298,7 +292,9 @@ const sendPasswordResetLink = async (req, res) => {
     });
 
     // Create reset link
-    const resetLink = `${process.env.FRONTEND_URL || 'http://localhost:5173'}/auth/reset-password/${resetToken}`;
+    const resetLink = `${
+      process.env.FRONTEND_URL || "http://localhost:5173"
+    }/auth/reset-password/${resetToken}`;
 
     // Send email
     await mailSender(
@@ -386,13 +382,12 @@ const resetPassword = async (req, res) => {
   }
 };
 
-module.exports = { 
-  signUp, 
-  login, 
-  sendOTP, 
-  changePassword, 
-  updateUser, 
-  sendPasswordResetLink, 
-  resetPassword 
+module.exports = {
+  signUp,
+  login,
+  sendOTP,
+  changePassword,
+  updateUser,
+  sendPasswordResetLink,
+  resetPassword,
 };
-
