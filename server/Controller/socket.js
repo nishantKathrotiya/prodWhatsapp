@@ -288,22 +288,22 @@ const sendMessages = async (req, res) => {
       try {
         const chatId = data.contactNo + "@c.us";
         await clients[userId].client.sendMessage(chatId, message);
-        return { 
-          contact: chatId, 
+        return {
+          contact: chatId,
           success: true,
           contactNo: data.contactNo,
           studentId: data.studentId,
-          name: data.name
+          name: data.name,
         };
       } catch (err) {
         console.error(`Failed to send to ${data.contactNo}: ${err.message}`);
-        return { 
-          contact: data.contactNo, 
-          success: false, 
+        return {
+          contact: data.contactNo,
+          success: false,
           error: err.message,
           contactNo: data.contactNo,
           studentId: data.studentId,
-          name: data.name
+          name: data.name,
         };
       }
     });
@@ -312,16 +312,18 @@ const sendMessages = async (req, res) => {
     const responses = await Promise.all(sendMessagePromises);
 
     // Get current Indian date (IST timezone)
-    const indianDate = new Date(new Date().toLocaleString("en-US", {timeZone: "Asia/Kolkata"}));
+    const indianDate = new Date(
+      new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" })
+    );
 
-    const messagesToInsert = responses.map(response => {
+    const messagesToInsert = responses.map((response) => {
       return {
         sender: req.user.phoneNumber || "system", // Use user's phone number or default
-        receiver: response.contactNo,            // Receiver's phone number
-        message: message,                        // Message body
-        timestamp: indianDate,                   // Current Indian date
-        status: response.success ? 'success' : 'failed', // Success/failure status
-        senderId: req.user.employeeId                    // User ID who sent the message
+        receiver: response.contactNo, // Receiver's phone number
+        message: message, // Message body
+        timestamp: indianDate, // Current Indian date
+        status: response.success ? "success" : "failed", // Success/failure status
+        senderId: req.user.employeeId, // User ID who sent the message
       };
     });
 
@@ -416,16 +418,16 @@ const directMessageSend = async (req, res, processingStatus) => {
           "91" + data + "@c.us",
           message
         );
-        return { 
-          contactNo: data, 
-          success: true 
+        return {
+          contactNo: data,
+          success: true,
         };
       } catch (err) {
         console.error(`Failed to send to ${data}: ${err.message}`);
-        return { 
-          contactNo: data, 
-          success: false, 
-          error: err.message 
+        return {
+          contactNo: data,
+          success: false,
+          error: err.message,
         };
       }
     });
@@ -434,7 +436,9 @@ const directMessageSend = async (req, res, processingStatus) => {
     const responses = await Promise.all(sendMessagePromises);
 
     // Get current Indian date (IST timezone)
-    const indianDate = new Date(new Date().toLocaleString("en-US", {timeZone: "Asia/Kolkata"}));
+    const indianDate = new Date(
+      new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" })
+    );
 
     const messagesToInsert = responses.map((response) => {
       return {

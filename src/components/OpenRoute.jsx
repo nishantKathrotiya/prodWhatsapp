@@ -4,9 +4,9 @@ import { useSelector } from 'react-redux'
 
 const OpenRoute = ({ children }) => {
 
-    const { token  } = useSelector((state) => state.profile)
+    const { token } = useSelector((state) => state.profile)
 
-    if (token == null) {
+    if (token == null || token == undefined) {
         return children
     } else {
         return <Navigate to={`/admin`} />

@@ -40,7 +40,7 @@ const signUp = async (req, res) => {
   ) {
     return res.json({
       success: false,
-      msg: "Fill All the Fields",
+      message: "Fill All the Fields",
       body: req.body,
     });
   }
@@ -48,7 +48,7 @@ const signUp = async (req, res) => {
   if (!isCharusatEmail(email)) {
     return res.json({
       success: false,
-      msg: "Not a valid charusta email id",
+      message: "Not a valid charusta email id",
       body: req.body,
     });
   }
@@ -58,7 +58,7 @@ const signUp = async (req, res) => {
   if (userPresent) {
     return res.json({
       success: false,
-      msg: "User Alredy Exist",
+      message: "User Alredy Exist",
     });
   }
 
@@ -70,7 +70,7 @@ const signUp = async (req, res) => {
   if (findOtp[0].otp !== otp) {
     return res.json({
       success: false,
-      msg: "OTP Does not match",
+      message: "OTP Does not match",
       db: findOtp[0].otp,
       otp,
     });
@@ -88,7 +88,7 @@ const signUp = async (req, res) => {
 
   return res.json({
     success: true,
-    msg: "User Registred",
+    message: "User Registred",
   });
 };
 
@@ -108,7 +108,7 @@ const login = async (req, res) => {
     if (!isCharusatEmail(email)) {
       return res.json({
         success: false,
-        msg: "Not a valid charusta email id",
+        message: "Not a valid charusta email id",
         body: req.body,
       });
     }
@@ -144,8 +144,12 @@ const login = async (req, res) => {
       res.cookie("token", token, options);
       return res.status(200).json({
         success: true,
-        token,
-        user,
+        user: {
+          firstName: user.firstName,
+          lastName: user.lastName,
+          employeeId: user.employeeId,
+          email: user.email,
+        },
         message: "Logged in successfully",
       });
     } else {
@@ -169,7 +173,7 @@ const sendOTP = async (req, res) => {
     if (!isCharusatEmail(req?.body?.email)) {
       return res.json({
         success: false,
-        msg: "Not a valid charusta email id",
+        message: "Not a valid charusta email id",
         body: req.body,
       });
     }
@@ -202,12 +206,12 @@ const sendOTP = async (req, res) => {
     );
     res.json({
       success: true,
-      msg: "OTP Sent Successfully",
+      message: "OTP Sent Successfully",
     });
   } catch {
     res.json({
       success: false,
-      msg: "Something Went Wrong",
+      message: "Something Went Wrong",
     });
   }
 };
@@ -243,7 +247,7 @@ const updateUser = async (req, res) => {
   } catch (err) {
     res.json({
       success: false,
-      msg: "Something Went Wrong",
+      message: "Something Went Wrong",
     });
   }
 };
@@ -267,7 +271,7 @@ const sendPasswordResetLink = async (req, res) => {
     if (!isCharusatEmail(email)) {
       return res.json({
         success: false,
-        msg: "Not a valid charusta email id",
+        message: "Not a valid charusta email id",
         body: req.body,
       });
     }

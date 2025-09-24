@@ -1,9 +1,14 @@
 .dashboardContainer {
-  width: 100%;
+  /* width: 100%; */
   padding: 24px;
   background-color: #f8fafc;
   overflow-y: auto;
 }
+
+.dashboardContainer::-webkit-scrollbar {
+  display: none;
+}
+
 
 .dashboardHeader {
   display: flex;
@@ -129,14 +134,17 @@
   align-items: center;
   gap: 4px;
   font-size: 12px;
-  color: #10b981; /* Green for positive */
+  color: #10b981;
+  /* Green for positive */
 }
 
 .statTrend.negative {
-  color: #ef4444; /* Red for negative */
+  color: #ef4444;
+  /* Red for negative */
 }
 
-.trendIconUp, .trendIconDown {
+.trendIconUp,
+.trendIconDown {
   font-size: 14px;
 }
 
@@ -199,7 +207,8 @@
   transition: all 0.2s ease;
 }
 
-.periodSelect:hover, .periodSelect:focus {
+.periodSelect:hover,
+.periodSelect:focus {
   border-color: #3b82f6;
 }
 
@@ -217,7 +226,8 @@
   margin-bottom: 24px;
 }
 
-.insightCard, .featuresCard {
+.insightCard,
+.featuresCard {
   background-color: white;
   border-radius: 12px;
   padding: 24px;
@@ -226,12 +236,14 @@
   transition: all 0.3s ease;
 }
 
-.insightCard:hover, .featuresCard:hover {
+.insightCard:hover,
+.featuresCard:hover {
   transform: translateY(-3px);
   box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05);
 }
 
-.insightCard h3, .featuresCard h3 {
+.insightCard h3,
+.featuresCard h3 {
   font-size: 18px;
   font-weight: 600;
   color: #1f2937;
@@ -413,6 +425,7 @@
   0% {
     background-position: -200% 0;
   }
+
   100% {
     background-position: 200% 0;
   }
@@ -423,11 +436,11 @@
   .chartsGrid {
     grid-template-columns: 1fr;
   }
-  
+
   .chartCard {
     height: 350px;
   }
-  
+
   .actionButton {
     flex-basis: calc(25% - 16px);
   }
@@ -447,7 +460,7 @@
   .dashboardContainer {
     padding: 16px;
   }
-  
+
   .dashboardHeader {
     flex-direction: column;
     align-items: flex-start;
@@ -460,20 +473,20 @@
     justify-content: space-between;
     align-items: center;
   }
-  
+
   .statsGrid {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 16px;
   }
-  
+
   .statCard {
     padding: 16px;
   }
-  
+
   .statValue {
     font-size: 24px;
   }
-  
+
   .chartCard {
     padding: 16px;
     height: 300px;
@@ -488,22 +501,22 @@
   .statsGrid {
     grid-template-columns: 1fr;
   }
-  
+
   .chartCard {
     height: 250px;
   }
-  
+
   .statCard {
     flex-direction: column;
     gap: 8px;
     align-items: flex-start;
   }
-  
+
   .statIconContainer {
     width: 40px;
     height: 40px;
   }
-  
+
   .featureItem {
     flex-direction: column;
     align-items: flex-start;
@@ -584,16 +597,20 @@
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
 }
 
 @keyframes pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 0.5;
     transform: scale(0.9);
   }
+
   50% {
     opacity: 1;
     transform: scale(1.1);
@@ -644,4 +661,4 @@
 .refreshButton:hover {
   background-color: rgba(59, 130, 246, 0.1);
   transform: rotate(30deg);
-} 
+}

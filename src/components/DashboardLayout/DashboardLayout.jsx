@@ -4,13 +4,13 @@ import DesktopSidebar from '../DesktopSidebar/DesktopSidebar';
 import Titlebar from '../Titlebar/Titlebar';
 import MobileSidebar from '../MobileSidebar/MobileSidebar';
 import ConnectModal from '../ConnectModal/ConnectModal';
-import {toast} from 'react-hot-toast'
-import {io} from 'socket.io-client'
+import { toast } from 'react-hot-toast'
+import { io } from 'socket.io-client'
 import { Outlet } from 'react-router-dom';
 import { checkStatus } from '../../Services/Operations/Message';
 import { useDispatch } from 'react-redux';
 import { setStatus2 } from '../../Slices/profileSlice';
-
+import { logout } from '../../Services/Operations/Auth';
 const DashboardLayout = () => {
     const [isSidebarVisible, setIsSidebarVisible] = useState(true);
     const [isMobile, setIsMobile] = useState(false);
@@ -18,12 +18,13 @@ const DashboardLayout = () => {
     const [status, setStatus] = useState("DISCONNECTED");
     const [isModalOpen, setIsModalOpen] = useState(false);
     const dispatch = useDispatch()
+    const BACKEND_URL = import.meta.env.BACKEND_URL ?? "http://localhost:4000";
 
 
     const [loading, setLoading] = useState(false);
     const [qrData, setQrData] = useState(null);
-    const [socket,setSocket] = useState(null);
-    
+    const [socket, setSocket] = useState(null);
+
 
 
     useEffect(() => {
@@ -35,10 +36,9 @@ const DashboardLayout = () => {
 
             // Handle socket connection and events
             newSocket.on("connect", () => {
-                toast.success("Connected")
+                toast.success("Socket Connected")
                 setLoading(false);
                 setStatus("SOCKET")
-                console.log("Socket Connected");
             });
 
             newSocket.on("status", (data) => {
@@ -55,28 +55,32 @@ const DashboardLayout = () => {
                 setStatus("QR");
             });
 
+            newSocket.on("login-error", (data) => {
+                setLoading(false);
+                toast.error(data.message);
+                logout();
+            });
+
             // Clean up on modal close
             return () => {
                 newSocket.disconnect();
-                console.log("Socket Disconnected");
             };
         } else {
             if (socket) {
                 socket.disconnect();
-                console.log("Socket Disconnected due to modal closing");
             }
         }
     }, [isModalOpen]);
-    
-    useEffect(()=>{
-        dispatch( checkStatus(setLoading));
-    },[]);
 
-    const handleLogin = ()=>{
+    useEffect(() => {
+        dispatch(checkStatus(setLoading));
+    }, []);
+
+    const handleLogin = () => {
         setStatus("INITIALIZING");
         setLoading(true);
         socket.emit('login')
-   }
+    }
 
 
     // Check if the screen is mobile size
@@ -120,10 +124,10 @@ const DashboardLayout = () => {
 
             {/* Title Bar Content Container*/}
             <div className={`${s.layoutMainContainer} ${!isMobile && !isSidebarVisible ? s.fullWidth : ''}`}>
-                <Titlebar handleToggleClick={handleToggleClick} setIsModalOpen={setIsModalOpen}/>
+                <Titlebar handleToggleClick={handleToggleClick} setIsModalOpen={setIsModalOpen} />
                 <div className={s.layoutContent}>
                     <div className={s.scr}>
-                        <Outlet/>
+                        <Outlet />
                     </div>
                 </div>
             </div>
@@ -135,9 +139,9 @@ const DashboardLayout = () => {
 
             {/* Connect & Disconnect Popup*/}
             {
-                isModalOpen && <ConnectModal status={status}  setStatus={setStatus} setIsModalOpen={setIsModalOpen} loading={loading} qrData={qrData} socket={socket} handleLogin={handleLogin}/>
+                isModalOpen && <ConnectModal status={status} setStatus={setStatus} setIsModalOpen={setIsModalOpen} loading={loading} qrData={qrData} socket={socket} handleLogin={handleLogin} />
             }
-            
+
         </div>
     );
 };

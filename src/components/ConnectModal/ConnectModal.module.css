@@ -1,4 +1,8 @@
-.connectModal{
+.textCenter {
+    text-align: center;
+}
+
+.connectModal {
     position: fixed;
     top: 0;
     left: 0;
@@ -12,7 +16,7 @@
     z-index: 100;
 }
 
-.conncetConatiner{
+.conncetConatiner {
     width: 85%;
     height: 90%;
     border-radius: 8px;
@@ -20,7 +24,7 @@
     border: 1px solid var(--placeholder-color);
 }
 
-.popTitleConatainer{
+.popTitleConatainer {
     width: 100%;
     height: 8%;
     display: flex;
@@ -30,26 +34,28 @@
     border-bottom: 1px solid var(--placeholder-color);
 }
 
-.closeIcon{
+.closeIcon {
     color: var(--h3-color);
     font-size: xx-large;
     transform: scale(1);
     cursor: pointer;
 }
-.coantentConatainer{
+
+.coantentConatainer {
     width: 100%;
     height: 92%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.loadingConatainer{
+
+.loadingConatainer {
     width: 50%;
     height: 50%;
     text-align: center;
 }
 
-.readyContainer{
+.readyContainer {
     text-align: center;
 }
 
@@ -58,7 +64,7 @@
 
 /* ConnectModal.module.css */
 
-.qrContainer{
+.qrContainer {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -72,22 +78,23 @@
     align-items: center;
     z-index: 1;
     margin-bottom: 1.75rem;
-    padding: 0; 
-  }
-  
-  .svgBackground {
-    fill: #9af3c441; 
-  }
-  
-  .svgIconWrapper {
+    padding: 0;
+}
+
+.svgBackground {
+    fill: #9af3c441;
+}
+
+.svgIconWrapper {
     position: absolute;
     transform: translate(-50%, -50%);
     left: 50%;
     top: 50%;
     margin: 0;
     padding: 0;
-  }
-  
-  .svgIcon {
-    fill: green; /* Default success color */
-  }
+}
+
+.svgIcon {
+    fill: green;
+    /* Default success color */
+}

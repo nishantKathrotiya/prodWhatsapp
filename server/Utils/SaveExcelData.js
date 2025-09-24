@@ -2,7 +2,7 @@ const Student = require("../Modal/Student");
 const fs = require("fs");
 const path = require("path");
 const csv = require("csv-parser");
-const dbConnect  = require('../Config/Connect')
+const dbConnect = require("../Config/Connect");
 
 const filePath = path.join(__dirname, "Student - Copy.csv");
 
@@ -28,17 +28,16 @@ async function saveStudentData(studentData) {
       department: studentData["department"],
       currentSemester: studentData["Current Semester"],
       division: studentData["Division"],
-      counsellor:studentData['Counsellor'],
+      counsellor: studentData["Counsellor"],
       batch: studentData["Batch"],
       personalNumber: extractFirstNumber(studentData["Mobile No"]),
       homeNumber:
         extractFirstNumber(studentData["Home Phone No"]) ||
         extractFirstNumber(studentData["Phone No"]),
       emergencyNumber: extractFirstNumber(studentData["Emergency No"]),
-      year:3,
+      year: 3,
     });
     await student.save();
-    console.log(`Student ${student.studentId} saved successfully.`);
   } catch (error) {
     console.error("Error saving student:", error);
   }
@@ -60,6 +59,6 @@ function extractFirstNumber(phoneString) {
 }
 
 dbConnect();
-start()
+start();
 
 module.exports = { saveStudentData };

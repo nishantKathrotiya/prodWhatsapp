@@ -6,7 +6,7 @@ import { IoCloseCircleOutline } from "react-icons/io5";
 
 
 
-const ConnectModal = ({ status, setStatus, setIsModalOpen,loading,qrData,socket,handleLogin }) => {
+const ConnectModal = ({ status, setStatus, setIsModalOpen, loading, qrData, socket, handleLogin }) => {
 
 
     const handleCloseModal = () => {
@@ -25,7 +25,7 @@ const ConnectModal = ({ status, setStatus, setIsModalOpen,loading,qrData,socket,
                 </div>
 
                 <div className={s.coantentConatainer}>
-                    {loading  ? (
+                    {loading ? (
                         <div className={s.loadingConatainer}>
                             <Loading />
                             <h3>Hold on—panda's soaring!</h3>
@@ -34,7 +34,7 @@ const ConnectModal = ({ status, setStatus, setIsModalOpen,loading,qrData,socket,
                         <>
                             {status === "SOCKET" && (
                                 <div className={s.buttonContainer}>
-                                    <p>Ready to connect WhatsApp</p>
+                                    <p className={s.textCenter}>Ready to connect WhatsApp</p>
                                     <button className={s.generateButton} onClick={handleLogin}>
                                         Generate QR Code
                                     </button>
@@ -43,7 +43,7 @@ const ConnectModal = ({ status, setStatus, setIsModalOpen,loading,qrData,socket,
 
                             {status === "QR" && (
                                 <div className={s.qrContainer}>
-                                    <p>Scan this QR code with your WhatsApp</p>
+                                    <p className={s.textCenter}>Scan this QR code with your WhatsApp</p>
                                     {qrData ? (
                                         <QRCode value={qrData} size={256} />
                                     ) : (

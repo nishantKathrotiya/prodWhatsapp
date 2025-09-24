@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import s from './Dashboard.module.css';
-import { 
-  IoStatsChart, 
-  IoMailSharp, 
-  IoSchool, 
+import {
+  IoStatsChart,
+  IoMailSharp,
+  IoSchool,
   IoCheckmarkDoneSharp,
-  IoArrowUp, 
-  IoArrowDown, 
+  IoArrowUp,
+  IoArrowDown,
   IoCalendarOutline,
   IoTimeOutline,
   IoSendSharp,
@@ -39,7 +39,7 @@ const Dashboard = () => {
     const timer = setInterval(() => {
       setCurrentTime(new Date());
     }, 60000);
-    
+
     return () => {
       clearInterval(timer);
     };
@@ -77,10 +77,10 @@ const Dashboard = () => {
 
   // Format time as HH:MM AM/PM
   const formatTime = (date) => {
-    return date.toLocaleTimeString('en-US', { 
-      hour: '2-digit', 
+    return date.toLocaleTimeString('en-US', {
+      hour: '2-digit',
       minute: '2-digit',
-      hour12: true 
+      hour12: true
     });
   };
 
@@ -378,7 +378,7 @@ const Dashboard = () => {
                 <div className={s.progressFill} style={{ width: '85%' }}></div>
               </div>
             </div>
-            
+
             <div className={s.insightItem}>
               <div className={s.insightHeader}>
                 <span className={s.insightTitle}>Message Efficiency</span>
@@ -388,7 +388,7 @@ const Dashboard = () => {
                 <div className={s.progressFill} style={{ width: '92%' }}></div>
               </div>
             </div>
-            
+
             <div className={s.insightItem}>
               <div className={s.insightHeader}>
                 <span className={s.insightTitle}>Student Reach</span>
@@ -398,7 +398,7 @@ const Dashboard = () => {
                 <div className={s.progressFill} style={{ width: '78%' }}></div>
               </div>
             </div>
-            
+
             <div className={s.insightItem}>
               <div className={s.insightHeader}>
                 <span className={s.insightTitle}>Platform Health</span>
@@ -410,7 +410,7 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-        
+
         <div className={s.featuresCard}>
           <h3>Platform Benefits</h3>
           <div className={s.featuresList}>
@@ -423,7 +423,7 @@ const Dashboard = () => {
                 <p>Send targeted messages to individual students or groups.</p>
               </div>
             </div>
-            
+
             <div className={s.featureItem}>
               <div className={s.featureIcon} style={{ backgroundColor: 'rgba(16, 185, 129, 0.1)' }}>
                 <IoSchool style={{ color: '#10b981' }} />
@@ -433,7 +433,7 @@ const Dashboard = () => {
                 <p>Manage students by department, year, division, and batch.</p>
               </div>
             </div>
-            
+
             <div className={s.featureItem}>
               <div className={s.featureIcon} style={{ backgroundColor: 'rgba(249, 115, 22, 0.1)' }}>
                 <IoCheckmarkDoneSharp style={{ color: '#f97316' }} />
@@ -443,7 +443,7 @@ const Dashboard = () => {
                 <p>Monitor message delivery status and success rates.</p>
               </div>
             </div>
-            
+
             <div className={s.featureItem}>
               <div className={s.featureIcon} style={{ backgroundColor: 'rgba(139, 92, 246, 0.1)' }}>
                 <IoStatsChart style={{ color: '#8b5cf6' }} />
@@ -467,14 +467,14 @@ const Dashboard = () => {
             </div>
             <span>Send New Message</span>
           </Link>
-          
+
           <Link to="/admin/addstudents" className={s.actionButton}>
             <div className={s.actionIconContainer}>
               <IoAdd />
             </div>
             <span>Add New Student</span>
           </Link>
-          
+
           <Link to="/admin/history" className={s.actionButton}>
             <div className={s.actionIconContainer}>
               <IoTimeOutline />

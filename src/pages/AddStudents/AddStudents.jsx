@@ -5,6 +5,14 @@ import { FaFileExcel, FaFileCsv, FaRocket, FaTimes } from 'react-icons/fa';
 import { toast } from 'react-hot-toast';
 import axios from 'axios';
 
+const BACKEND_URL = import.meta.env.BACKEND_URL ?? "http://localhost:4000";
+
+const UPLOAD_ENDPOINTS = {
+  UPLOAD_STUDENTS: BACKEND_URL + "/api/v1/upload/students",
+  PROCESSING_STATUS: BACKEND_URL + "/api/v1/upload/status",
+  DONWLAOD_TEMPLATE: BACKEND_URL + "/api/v1/upload/template"
+};
+
 const AddStudents = () => {
   const [file, setFile] = useState(null);
   const [uploading, setUploading] = useState(false);
@@ -18,12 +26,12 @@ const AddStudents = () => {
     if (selectedFile) {
       const fileType = selectedFile.type;
       const fileExt = selectedFile.name.split('.').pop().toLowerCase();
-      
+
       if (
-        (fileType === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' || 
-         fileType === 'application/vnd.ms-excel' ||
-         fileType === 'text/csv' ||
-         fileExt === 'csv')
+        (fileType === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
+          fileType === 'application/vnd.ms-excel' ||
+          fileType === 'text/csv' ||
+          fileExt === 'csv')
       ) {
         setFile(selectedFile);
         toast.success('File selected successfully');
@@ -58,7 +66,7 @@ const AddStudents = () => {
 
     try {
       setUploading(true);
-      const response = await axios.post('http://localhost:4000/api/v1/upload/students', formData, {
+      const response = await axios.post(UPLOAD_ENDPOINTS.UPLOAD_STUDENTS, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -83,8 +91,8 @@ const AddStudents = () => {
   const pollProcessingStatus = async (fileId) => {
     const pollInterval = setInterval(async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/api/v1/upload/status/${fileId}`);
-        
+        const response = await axios.get(`${UPLOAD_ENDPOINTS.PROCESSING_STATUS}/${fileId}`);
+
         if (response.data.status === 'completed') {
           clearInterval(pollInterval);
           setProcessing(false);
@@ -112,7 +120,7 @@ const AddStudents = () => {
   };
 
   const downloadTemplate = (format) => {
-    window.open(`http://localhost:4000/api/v1/upload/template?format=${format}`, '_blank');
+    window.open(`${UPLOAD_ENDPOINTS.DONWLAOD_TEMPLATE}?format=${format}`, '_blank');
   };
 
   return (
@@ -149,7 +157,7 @@ const AddStudents = () => {
                 {file ? (
                   <div className={s.fileInfo}>
                     <span>{file.name}</span>
-                    <button 
+                    <button
                       className={s.removeFileBtn}
                       onClick={(e) => {
                         e.preventDefault();
@@ -169,8 +177,8 @@ const AddStudents = () => {
             </div>
           </div>
 
-          <button 
-            className={s.uploadBtn} 
+          <button
+            className={s.uploadBtn}
             onClick={handleUpload}
             disabled={!file || uploading || processing}
           >

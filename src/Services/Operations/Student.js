@@ -34,9 +34,8 @@ export async function getStudents(setStudents, setLoading, queryParams) {
       throw new Error("No Students with this Filter");
     }
     setStudents(response.data.data);
-    toast.success(`${response.data.data.length} Students Found`)
+    toast.success(`${response.data.data.length} Students Found`);
   } catch (error) {
-    console.log(" ERROR............", error);
     toast.error(error.message);
   }
   toast.dismiss(toastId);

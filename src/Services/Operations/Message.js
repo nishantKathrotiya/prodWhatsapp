@@ -19,7 +19,6 @@ export function checkStatus(setLoading) {
         toast.error("Whtsapp is not connected");
       }
     } catch (error) {
-      console.log(" ERROR............", error);
       toast.error("Could't fetch the status");
     }
     toast.dismiss(toastId);
@@ -27,7 +26,12 @@ export function checkStatus(setLoading) {
   };
 }
 
-export async function sendMessages(selectedIds, message, setLoading, setActiveStep) {
+export async function sendMessages(
+  selectedIds,
+  message,
+  setLoading,
+  setActiveStep
+) {
   const toastId = toast.loading("Loading...");
   setLoading(true);
 
@@ -42,7 +46,6 @@ export async function sendMessages(selectedIds, message, setLoading, setActiveSt
     toast.success("Messages Sent!");
     setActiveStep(3);
   } catch (error) {
-    console.log(" ERROR............", error);
     toast.error(error.message);
   }
   toast.dismiss(toastId);
@@ -61,7 +64,6 @@ export function disconnectWhtsapp() {
       dispatch(setStatus2("DISCONNECTED"));
       toast.success("Disconncetd successfully");
     } catch (error) {
-      console.log(" ERROR............", error);
       toast.error(error.message);
     }
     toast.dismiss(toastId);

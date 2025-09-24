@@ -20,23 +20,23 @@ function App() {
   return (
     <div className='mainRoot'>
       <Routes>
-        
-        <Route path="/" element={<AuthenticationLayout />}> 
-          <Route path="/" element={<OpenRoute><Login /></OpenRoute>}/>
-          <Route path="/signup" element={<OpenRoute><Signup /></OpenRoute>}/>
-          <Route path="/verify-email" element={<OpenRoute><OneTimePassword /></OpenRoute>}/>
-          <Route path="/forgot-password" element={<OpenRoute><ForgotPassword /></OpenRoute>}/>
-          <Route path="/auth/reset-password/:token" element={<OpenRoute><ResetPassword /></OpenRoute>}/>
+
+        <Route path="/" element={<AuthenticationLayout />}>
+          <Route path="/" element={<OpenRoute><Login /></OpenRoute>} />
+          <Route path="/signup" element={<OpenRoute><Signup /></OpenRoute>} />
+          <Route path="/verify-email" element={<OpenRoute><OneTimePassword /></OpenRoute>} />
+          <Route path="/forgot-password" element={<OpenRoute><ForgotPassword /></OpenRoute>} />
+          <Route path="/auth/reset-password/:token" element={<OpenRoute><ResetPassword /></OpenRoute>} />
         </Route>
-        <Route path="/admin" element={<><DashboardLayout /></>}>
-          <Route path="/admin" element={<Dashboard />} /> 
+        <Route path="/admin" element={<PrivateRoute><DashboardLayout /></PrivateRoute>}>
+          <Route path="/admin" element={<Dashboard />} />
           <Route path="/admin/students" element={<Students />} />
           <Route path="/admin/history" element={<History />} />
           <Route path="/admin/addstudents" element={<AddStudents />} />
           <Route path="/admin/directmessage" element={<DirectMessage />} />
         </Route>
       </Routes>
-      
+
     </div>
   )
 }
