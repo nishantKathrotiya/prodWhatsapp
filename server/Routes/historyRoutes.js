@@ -4,7 +4,7 @@ const {
   getMessageHistory,
   getMessageHistoryById,
 } = require("../Controller/historyController");
-const { isLoggedin } = require("../Middleware/authMiddleware");
+const { isLoggedin } = require("../Middleware/AuthMiddleware");
 
 router.get("/", isLoggedin, getMessageHistory);
 router.get("/:id", isLoggedin, getMessageHistoryById);

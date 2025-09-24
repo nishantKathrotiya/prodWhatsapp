@@ -6,16 +6,16 @@ const getMessageHistory = async (req, res) => {
     const skip = (page - 1) * limit;
 
     // Get the authenticated user's ID from the request
-    const userId = req.user.id;
+    const userEmail = req.user.email;
 
     // Filter history by the authenticated user's ID
-    const history = await History.find({ senderId: userId })
+    const history = await History.find({ senderId: userEmail })
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(parseInt(limit))
       .lean();
 
-    const total = await History.countDocuments({ senderId: userId });
+    const total = await History.countDocuments({ senderId: userEmail });
 
     res.json({
       success: true,

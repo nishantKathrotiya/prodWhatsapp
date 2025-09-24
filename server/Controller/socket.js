@@ -13,15 +13,34 @@ const setUpSocket = (io) => {
     let associatedUserId = null;
 
     socket.on("login", async () => {
-      const userId = await socketUserIdExtract(
-        cookie.parse(socket.request.headers.cookie).token,
-        socket
-      );
-      console.log(`Login request for ${userId} from socket ${socket.id}`);
-      associatedUserId = userId; // Store the userId associated with this socket
-      initializeClient(userId, socket, io, userSockets, clients);
+      try {
+        const cookieHeader = socket.request.headers.cookie;
+        if (typeof cookieHeader !== "string") {
+          console.error("No cookie header found in socket request");
+          socket.emit("login-error", {
+            message: "No cookie header found. Please login again.",
+          });
+          return;
+        }
+        const parsedCookies = cookie.parse(cookieHeader);
+        if (!parsedCookies.token) {
+          console.error("No token found in cookies");
+          socket.emit("login-error", {
+            message: "No token found in cookies. Please login again.",
+          });
+          return;
+        }
+        const userId = await socketUserIdExtract(parsedCookies.token, socket);
+        console.log(`Login request for ${userId} from socket ${socket.id}`);
+        associatedUserId = userId; // Store the userId associated with this socket
+        initializeClient(userId, socket, io, userSockets, clients);
+      } catch (err) {
+        console.error("Error during socket login:", err);
+        socket.emit("login-error", {
+          message: "Login failed. Please try again.",
+        });
+      }
     });
-
     socket.on("disconnect", () => {
       console.log(`Socket disconnected: ${socket.id}`);
 
@@ -323,7 +342,7 @@ const sendMessages = async (req, res) => {
         message: message, // Message body
         timestamp: indianDate, // Current Indian date
         status: response.success ? "success" : "failed", // Success/failure status
-        senderId: req.user.employeeId, // User ID who sent the message
+        senderId: req.user.email, // User ID who sent the message
       };
     });
 

@@ -85,6 +85,7 @@ exports.socketUserIdExtract = async (token, socket) => {
     }
 
     userAtDb.password = undefined;
+    console.log("Extracted id", userAtDb.id);
     return userAtDb.id;
   } catch (error) {
     socket.emit("server_error");
