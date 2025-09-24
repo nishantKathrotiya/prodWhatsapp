@@ -5,7 +5,7 @@ import { FaFileExcel, FaFileCsv, FaRocket, FaTimes } from 'react-icons/fa';
 import { toast } from 'react-hot-toast';
 import axios from 'axios';
 
-const BACKEND_URL = import.meta.env.BACKEND_URL ?? "http://localhost:4000";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL ?? "http://localhost:4000";
 
 const UPLOAD_ENDPOINTS = {
   UPLOAD_STUDENTS: BACKEND_URL + "/api/v1/upload/students",

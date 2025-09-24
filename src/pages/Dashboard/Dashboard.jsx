@@ -246,21 +246,11 @@ const Dashboard = () => {
           <p className={s.welcomeMessage}>
             {getGreeting()}! Here's what's happening with your messaging platform today.
           </p>
+          <p className={s.welcomeMessageInfo}>
+            This is sample data. Real insights will be displayed once sufficient data is available.
+          </p>
         </div>
-        <div className={s.headerControls}>
-          {lastRefresh && (
-            <div className={s.lastRefreshContainer}>
-              <span className={s.lastRefreshLabel}>Last updated: {formatTime(lastRefresh)}</span>
-              <button className={s.refreshButton} onClick={loadDashboardData} title="Refresh dashboard data">
-                <IoSync />
-              </button>
-            </div>
-          )}
-          <div className={s.dateDisplay}>
-            <IoCalendarOutline />
-            <span>{currentTime.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</span>
-          </div>
-        </div>
+
       </header>
 
       <div className={s.statsGrid}>
@@ -481,20 +471,6 @@ const Dashboard = () => {
             </div>
             <span>View History</span>
           </Link>
-
-          <button className={s.actionButton}>
-            <div className={s.actionIconContainer}>
-              <IoSettings />
-            </div>
-            <span>Settings</span>
-          </button>
-
-          <button className={s.actionButton}>
-            <div className={s.actionIconContainer}>
-              <IoHelpCircleOutline />
-            </div>
-            <span>Get Help</span>
-          </button>
         </div>
       </div>
     </div>

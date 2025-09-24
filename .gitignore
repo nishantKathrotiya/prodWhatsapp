@@ -37,3 +37,7 @@ server/Utils/Student.csv
 
 server/.wwebjs_auth
 /server/.wwebjs_cache
+server/.env
+/server/.env
+
+.env

@@ -36,6 +36,12 @@
   margin: 0;
 }
 
+.welcomeMessageInfo {
+  font-size: x-small;
+  color: orange;
+  margin-top: 2px;
+}
+
 .dashboardHeader h1::after {
   content: "";
   position: absolute;

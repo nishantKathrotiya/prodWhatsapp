@@ -1,4 +1,4 @@
-const BASE_URL = import.meta.env.BACKEND_URL ?? "http://localhost:4000";
+const BASE_URL = import.meta.env.VITE_BACKEND_URL ?? "http://localhost:4000";
 
 export const AUTH_ENDPOINTS = {
   SENDOTP_API: BASE_URL + "/api/v1/auth/sendotp",

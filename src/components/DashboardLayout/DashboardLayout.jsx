@@ -18,7 +18,7 @@ const DashboardLayout = () => {
     const [status, setStatus] = useState("DISCONNECTED");
     const [isModalOpen, setIsModalOpen] = useState(false);
     const dispatch = useDispatch()
-    const BACKEND_URL = import.meta.env.BACKEND_URL ?? "http://localhost:4000";
+    const BACKEND_URL = import.meta.env.VITE_BACKEND_URL ?? "http://localhost:4000";
 
 
     const [loading, setLoading] = useState(false);
@@ -31,7 +31,7 @@ const DashboardLayout = () => {
         if (isModalOpen) {
             // Initialize socket when modal is opened
             setLoading(true);
-            const newSocket = io("http://localhost:4000", { withCredentials: true });
+            const newSocket = io(BACKEND_URL, { withCredentials: true });
             setSocket(newSocket);
 
             // Handle socket connection and events
