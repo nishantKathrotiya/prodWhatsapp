@@ -59,7 +59,7 @@ exports.isAdmin = async (req, res, next) => {
         message: "You are not admin",
       });
     }
-    console.log("Passed Is admin");
+    console.log("Admin Verified");
     next();
   } catch (error) {
     return res.json({
@@ -85,7 +85,6 @@ exports.socketUserIdExtract = async (token, socket) => {
     }
 
     userAtDb.password = undefined;
-    console.log("Extracted id", userAtDb.id);
     return userAtDb.id;
   } catch (error) {
     socket.emit("server_error");

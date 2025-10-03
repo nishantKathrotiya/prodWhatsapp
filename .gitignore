@@ -13,7 +13,6 @@ dist-ssr
 *.local
 
 # Editor directories and files
-.vscode/*
 !.vscode/extensions.json
 .idea
 .DS_Store
@@ -23,7 +22,6 @@ dist-ssr
 *.sln
 *.sw?
 
-.env
 ./server/node_modules
 
 ./server/.env
@@ -40,4 +38,4 @@ server/.wwebjs_auth
 server/.env
 /server/.env
 
-.env
+config.bat
