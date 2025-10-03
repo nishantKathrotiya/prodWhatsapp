@@ -4,12 +4,14 @@ import s from './OneTimePassword.module.css';
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux'
 import { signUp } from '../../Services/Operations/Auth';
-import {toast} from 'react-hot-toast'
+import { toast } from 'react-hot-toast'
+import { sendOtp } from '../../Services/Operations/Auth'
 const OneTimePassword = () => {
     const [otp, setOtp] = useState();
     const { signupData, loading } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const dummyNavigate = (str) => { }; // Dummy function to avoid navigation during resend OTP
 
     useEffect(() => {
         if (!signupData) {
@@ -17,21 +19,25 @@ const OneTimePassword = () => {
         }
     }, []);
 
-    const validate = ()=>{
-        if(otp.toString().length!=4){
+    const validate = () => {
+        if (otp.toString().length != 4) {
             toast.error("Fill Four digit Number");
             return false;
         }
         return true;
     }
 
-    const handleSubmit = (e)=>{
+    const handleSubmit = (e) => {
         e.preventDefault();
-        if(!validate()){
+        if (!validate()) {
             return;
         }
-        const {firstName, lastName, email,employeeId,department, password, confirmPassword, } = signupData;
-        dispatch(signUp(firstName, lastName, email,employeeId,department, password, confirmPassword,otp,navigate));
+        const { firstName, lastName, email, employeeId, department, password, confirmPassword, } = signupData;
+        dispatch(signUp(firstName, lastName, email, employeeId, department, password, confirmPassword, otp, navigate));
+    }
+
+    const handleResend = () => {
+        dispatch(sendOtp(signupData.email, dummyNavigate));
     }
 
     return (
@@ -57,12 +63,13 @@ const OneTimePassword = () => {
                                 </div>
                             </div>
                             <div className={s.optionConatiener}>
-                                <button type="submit" className={s.active} onClick={handleSubmit}> 
+                                <button type="submit" className={s.active} onClick={handleSubmit}>
                                     Submit
                                 </button>
                             </div>
                             <div className={s.optionConatiener}>
-                                <p className={s.link} onClick={() => console.log('Resend Code')}>Resend Code</p>
+                                {/*  ToDo: Resend Code */}
+                                <p className={s.link} onClick={handleResend}>Resend Code</p>
                             </div>
                         </form>
                     )
